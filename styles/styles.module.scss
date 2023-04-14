@@ -74,3 +74,118 @@
   }
 
 }
+
+// ------------- Search ------------- //
+
+.search {
+  height: 100%;
+  width: 100%;
+
+  &__background {
+    width:100%;
+    height:540px;
+    background-image:url(../public/search_banner.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position:center;
+    justify-content: center;
+    display: flex;
+  }
+
+  &__card {
+    background-color:#f8ede9;
+    height: 260px;
+    width: 60%;
+    top: 50%;
+    position: absolute;
+    border-radius: 30px;
+
+    &__title {
+      justify-content: center;
+      display: grid;
+      text-align: center;
+      font-family: system-ui;
+
+      p {
+        margin-top:10px;
+        margin-bottom:10px;
+        font-size:xx-large;
+      }
+    }
+    &__bar {
+      justify-content: center;
+      display:flex;
+      height:50px;
+      margin-top:30px;
+      form {
+        width:50%;
+      }
+      input {
+        width:100%;
+        min-height: 50px;
+        position: relative;
+        padding: 0 !important;
+        margin-left:0px !important;
+        margin-bottom: 0;
+        border-radius: 30px;
+        text-align: center;
+        font-size: larger;
+      }
+      button {
+        width:15%;
+        min-width: fit-content;
+        padding-right: 50px !important;
+        padding-left: 50px !important;
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+        margin-top:3px;
+        border-radius: 30px;
+        position: relative;
+      }
+    }
+
+    
+
+
+  }
+
+  &__categories {
+    font-size:xx-large;
+    font-family: system-ui;
+    background-color: #f8ede9 !important;
+    margin-top: 100px;
+    padding-left:10px; 
+
+    &__title {
+      color:black;
+    }
+    &__carousel {
+      transition: transform 0.5s ease-in-out;
+      overflow:hidden;
+
+      &__controls {
+        width: 100%;
+        display: inline-flex;
+        justify-content: space-between;
+        position: absolute;
+        margin-top: 38px;
+        right: 0;
+
+        button {
+          width: 80px;
+          height: 80px;
+          z-index: 2;
+          border-radius: 50px;
+          opacity: 50%;
+          font-size: 60px;
+          align-content: center;
+          display: grid;
+          padding-bottom: 18px;
+        }
+      }
+
+    }
+  }
+
+
+}
