@@ -1,7 +1,16 @@
 import React from 'react';
 import styles from "../styles/styles.module.scss";
+import BootstrapCarousel from '../components/BootstrapCarousel';
 
 function Search() {
+  const images = [
+    "../hamburguesa.jpg",
+    "../hamburguesa.jpg",
+    "../hamburguesa.jpg",
+    "../hamburguesa.jpg",
+    "../hamburguesa.jpg",
+    "../hamburguesa.jpg",
+  ];
     return (
         <div>
           <div className={styles.search}>
@@ -21,19 +30,8 @@ function Search() {
             </div>
             <div className={styles.search__categories}>
               <p className={styles.search__categories__title}><b>Nuestras categorías</b></p>
-              <div className={styles.search__categories__carousel} class="carousel">
-                <div className={styles.search__categories__carousel__controls}>
-                  <button id="prevBtn">&larr;</button>
-                  <button id="nextBtn">&rarr;</button>
-                </div>
-                <div className={styles.search__carousel__slide}>
-                  <div className={styles.search__carousel__slide__card}>
-                    <a href='SearchServlet.do?='>
-                      <img src="${pageContext.request.contextPath}/public/${category.img}" alt="Category"/>
-                    </a>
-                    <h1>Nombre categoria</h1>
-                  </div>
-                </div>
+              <div className={styles.slide}>
+                <BootstrapCarousel images={images}/>
               </div>
           </div>
         </div>
