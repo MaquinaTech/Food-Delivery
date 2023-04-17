@@ -188,8 +188,13 @@
 
     }
   }
+}
 
-
+.ListRestaurants {
+  padding-top:1%;
+  &__list {
+    width:80%;
+  }
 }
 
 .commerceSlide{
@@ -255,33 +260,8 @@
   }
 }
 
-
-.slide{
-  height:250px;
-  
+.reactList{
   div {
-    height:250px; 
-    display:flex;
-  }
-  &__itemP {
-    height: 40rem;
-    img {
-      width: 200px;
-      object-fit: cover;
-      height: 200px;
-    }
-    
-  }
-  &__carousel {
-    display:flex;
-  }
-
-  &__caption {
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 15px;
-    h3 {
-      font-size: 35px;
-      color: rgb(255, 255, 255);
-    }
+    height:200px;
   }
 }
