@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "../styles/styles.module.scss";
-import BootstrapCarousel from '../components/BootstrapCarousel';
+import Slide from '../components/Slide';
 
 function Search() {
   const images = [
@@ -21,17 +21,15 @@ function Search() {
                   <p> <b>¡Cuando quieras!</b> </p>
                 </div>
                 <div className={styles.search__card__bar}>
-                  <form action="SearchServlet.do" method="GET" className={styles.search__card__bar__form} id="searchForm">
-                      <input type="text" id="address" name="address" placeholder="Introduce tu dirección, Ej. Calle Alcalá, 6, Cáceres."/>
-                      <button id="searchButton" type="submit"><b>Search</b></button>
-                  </form>
+                    <input type="text" id="address" name="address" placeholder="Introduce tu dirección, Ej. Calle Alcalá, 6, Cáceres."/>
+                    <button id="searchButton" type="submit"><b>Search</b></button>
                 </div>
               </div>
             </div>
             <div className={styles.search__categories}>
               <p className={styles.search__categories__title}><b>Nuestras categorías</b></p>
-              <div className={styles.slide}>
-                <BootstrapCarousel images={images}/>
+              <div className={styles.commerceSlide}>
+                <Slide/>
               </div>
           </div>
         </div>

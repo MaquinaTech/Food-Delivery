@@ -15,7 +15,7 @@ function Header() {
         <ul className={styles.header__nav__ul}>
           <li className={styles.header__nav__ul__li}>
             <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/">
-              Inicio
+              Iniciar sesión
             </Link>
           </li>
           <li className={styles.header__nav__ul__li}>
@@ -24,7 +24,7 @@ function Header() {
             </Link>
           </li>
           <li className={styles.header__nav__ul__li}>
-            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/contacto">
+            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/acerca">
               Contacto
             </Link>
           </li>
