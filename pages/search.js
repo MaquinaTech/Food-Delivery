@@ -2,6 +2,8 @@ import React from 'react';
 import styles from "../styles/styles.module.scss";
 import Slide from '../components/Slide';
 
+
+
 function Search() {
   const images = [
     "../hamburguesa.jpg",
@@ -29,7 +31,7 @@ function Search() {
             <div className={styles.search__categories}>
               <p className={styles.search__categories__title}><b>Nuestras categorías</b></p>
               <div className={styles.commerceSlide}>
-                <Slide/>
+                <Slide images={images}/>
               </div>
           </div>
         </div>

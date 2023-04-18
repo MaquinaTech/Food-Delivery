@@ -4,7 +4,7 @@ import Image from 'next/image'
 import "react-multi-carousel/lib/styles.css";
 
 
-const Slide = () => {
+const Slide = (props) => {
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
@@ -23,15 +23,7 @@ const Slide = () => {
         }
     };
 
-    const images = [
-        "/hamburguesa.jpg",
-        "/hamburguesa.jpg",
-        "/hamburguesa.jpg",
-        "/hamburguesa.jpg",
-        "/hamburguesa.jpg",
-        "/hamburguesa.jpg",
-        "/hamburguesa.jpg",
-    ];
+    const images = props.images;
     
 
     return (
@@ -52,6 +44,7 @@ const Slide = () => {
         //dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-80-px height-100-%"
         >
+
         {images.map((image, index) => (
             <div key={index}>
                 {/*<Image src={image} width="100%" quality={100} priority={index < 5 ? true : false} height="100%" alt={`logo${index}`}/>*/}

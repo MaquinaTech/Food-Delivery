@@ -7,7 +7,7 @@ import styles from "../styles/styles.module.scss";
 function Home() {
   return (
     <div>
-      <ListRestaurants/>
+      <Search/>
     </div>
   );
 }
