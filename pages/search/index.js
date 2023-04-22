@@ -1,10 +1,11 @@
 import React from 'react';
-import styles from "../styles/styles.module.scss";
-import Slide from '../components/Slide';
-
+import styles from "../../styles/styles.module.scss";
+import Slide from '../../components/Slide';
+import { useRouter } from 'next/router';
 
 
 function Search() {
+  const router = new useRouter();
   const images = [
     "../hamburguesa.jpg",
     "../hamburguesa.jpg",
@@ -24,7 +25,7 @@ function Search() {
                 </div>
                 <div className={styles.search__card__bar}>
                     <input type="text" id="address" name="address" placeholder="Introduce tu dirección, Ej. Calle Alcalá, 6, Cáceres."/>
-                    <button id="searchButton" type="submit"><b>Search</b></button>
+                    <button id="searchButton" onClick={() => {router.push('/list-restaurants')}} type="submit"><b>Search</b></button>
                 </div>
               </div>
             </div>

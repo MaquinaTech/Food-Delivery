@@ -1,6 +1,7 @@
 import React from 'react';
-import ReactList from 'react-list';
 import styles from '../styles/styles.module.scss';
+import { ListGroup, ListGroupItem } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const List = ({ restaurants, name }) => {
   const renderItem = (index, key) => {
@@ -8,14 +9,26 @@ const List = ({ restaurants, name }) => {
   }
 
   return (
-    <div>
+    <div className={styles.wrapReactList}>
       <h1>{name}</h1>
-      <div className={styles.reactList} style={{overflow: 'auto', maxHeight: 1000}}>
-        <ReactList
-          itemRenderer={renderItem}
-          length={restaurants.length}
-          type='uniform'
-        />
+      <div className={styles.wrapReactList} style={{overflow: 'auto', maxHeight: 1000}}>
+      <ListGroup flush className={styles.reactList}>
+        <ListGroupItem className={styles.reactList__item}>
+          Burguer King
+        </ListGroupItem>
+        <ListGroupItem className={styles.reactList__item}>
+          Telepizza
+        </ListGroupItem>
+        <ListGroupItem className={styles.reactList__item}>
+          Atrio
+        </ListGroupItem>
+        <ListGroupItem className={styles.reactList__item}>
+          Wicco
+        </ListGroupItem>
+        <ListGroupItem className={styles.reactList__item}>
+          La mafia se sienta a la mesa
+        </ListGroupItem>
+      </ListGroup>
       </div>
     </div>
   );

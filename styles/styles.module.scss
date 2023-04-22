@@ -1,3 +1,4 @@
+
 // ------------- Login ------------- //
 .login {
 
@@ -97,7 +98,7 @@
     background-color:#f8ede9;
     height: 260px;
     width: 60%;
-    top: 20vmax;
+    top: 10vmax;
     position: absolute;
     border-radius: 30px;
 
@@ -155,11 +156,12 @@
     font-size:xx-large;
     font-family: system-ui;
     background-color: #f8ede9 !important;
-    margin-top: 100px;
+    //margin-top: 100px;
     padding-left:10px; 
 
     &__title {
       color:black;
+      margin-top: 0px;
     }
     &__carousel {
       transition: transform 0.5s ease-in-out;
@@ -187,13 +189,6 @@
       }
 
     }
-  }
-}
-
-.ListRestaurants {
-  padding-top:1%;
-  &__list {
-    width:80%;
   }
 }
 
@@ -260,8 +255,50 @@
   }
 }
 
-.reactList{
-  div {
-    height:200px;
+.ListRestaurants {
+  padding-top:1%;
+  padding-bottom:1%;
+  
+  &__content{
+    display:flex;
+    &__filter {
+      width:39%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &__box {
+        height:90%;
+        width:90%;
+        background-color: whitesmoke;
+        border-radius:25px;
+      }
+    }
+    &__list {
+      display:flex;
+      justify-content: flex-end;
+      width:59%;
+    }
+  }
+}
+
+.wrapReactList{
+  width:100%;
+  padding-left:10px;
+  padding-top:10px;
+  .reactList{
+    height: fit-content;
+    border-radius: 25px;
+    &__item {
+      min-height: 150px;
+      background-color: whitesmoke;
+      border-radius:15px;
+      margin-bottom:30px;
+    }
+  }
+}
+
+.searchFilter {
+  &__content {
+    padding:5px;
   }
 }
