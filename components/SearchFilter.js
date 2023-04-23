@@ -10,7 +10,7 @@ const SearchFilter = (props ) => {
     <div className={styles.searchFilter}>
       <h1>{title}</h1>
       <div className={styles.searchFilter__content}>
-      <Form>
+        <Form>
         <Row>
             <Col md={6}>
             <FormGroup>
@@ -69,34 +69,23 @@ const SearchFilter = (props ) => {
         <Row>
             <Col md={6}>
             <FormGroup>
-                <Label for="exampleCity">
-                City
+                <Label for="city">
+                Ciudad
                 </Label>
                 <Input
-                id="exampleCity"
+                id="city"
                 name="city"
                 />
             </FormGroup>
             </Col>
-            <Col md={4}>
+            <Col md={6}>
             <FormGroup>
-                <Label for="exampleState">
-                State
+                <Label for="country">
+                País
                 </Label>
                 <Input
-                id="exampleState"
-                name="state"
-                />
-            </FormGroup>
-            </Col>
-            <Col md={2}>
-            <FormGroup>
-                <Label for="exampleZip">
-                Zip
-                </Label>
-                <Input
-                id="exampleZip"
-                name="zip"
+                id="country"
+                name="country"
                 />
             </FormGroup>
             </Col>
@@ -114,9 +103,11 @@ const SearchFilter = (props ) => {
             ¿Bike Friendly?
             </Label>
         </FormGroup>
-        <Button>
-            Sign in
-        </Button>
+        <div className={styles.searchFilter__content__button}>
+            <Button  color="warning">
+                Filtrar
+            </Button>
+        </div>
         </Form>
       </div>
     </div>
