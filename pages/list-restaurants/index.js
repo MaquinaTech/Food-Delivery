@@ -27,7 +27,7 @@ function ListRestaurants() {
           <div className={styles.ListRestaurants__content}>
             <div className={styles.ListRestaurants__content__filter}>
               <div className={styles.ListRestaurants__content__filter__box}>
-                <SearchFilter title="Filtro"></SearchFilter>
+                <SearchFilter title="Filtro"/>
               </div>
             </div>
             <div className={styles.ListRestaurants__content__list}>

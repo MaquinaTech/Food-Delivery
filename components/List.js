@@ -11,7 +11,7 @@ const List = ({ restaurants, name }) => {
   const renderItem = (index, key) => {
     const restaurant = restaurants[index];
     return (
-      <ListGroupItem onClick={() => {router.push(restaurant.url)}} key={key} className={styles.reactList__item}>
+      <ListGroupItem onClick={() => {router.push('/edit-restaurants')}} key={key} className={styles.reactList__item}>
         <div className={styles.reactList__item__info}>
           <div className={styles.reactList__item__info__name}>
             {restaurant.name}
