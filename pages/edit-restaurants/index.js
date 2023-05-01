@@ -1,22 +1,23 @@
-import React from 'react';
-import Ratigns from '../../components/hoc/Ratings';
+import React, {useState} from 'react';
+import Ratings from '../../components/hoc/Ratings';
 import Restaurant from '../../components/hoc/Restaurant';
 import Order from '../../components/hoc/Order';
+import Link from 'next/link';
 import styles from "../../styles/styles.module.scss";
 
 
 function EditRestaurants() {
-  const restaurant = [
-    {name: 'Burguer King'},
-    {description: 'Restaurante de comida rápida, hamburguesas, refrescos, helados...'},
-    {dirección: 'Calle prueba'},
-    {email: 'burguerking@burguer.com'},
-  ];
+  const [orderList, setOrderList] = useState([]);
     return (
         <div className={styles.EditRestaurants}>
-          <Ratigns />
-          <Restaurant />
-          <Order />
+          <div className={styles.EditRestaurants__back}>
+            <Link href="/list-restaurants">
+              <img src="/back.svg" alt="back"/>  Ir a búsqueda
+            </Link>
+          </div>
+          <Ratings />
+          <Restaurant orderList={orderList} setOrderList={setOrderList}/>
+          <Order orderList={orderList} setOrderList={setOrderList} />
         </div>
     );
 }      

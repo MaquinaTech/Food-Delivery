@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from "../../styles/styles.module.scss";
 import Slide from '../../components/Slide';
 import List from '../../components/List';
