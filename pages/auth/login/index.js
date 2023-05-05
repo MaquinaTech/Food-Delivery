@@ -1,5 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Formik from 'formik';
 import styles from "../../../styles/styles.module.scss";
 
 
@@ -43,9 +45,10 @@ function Login() {
 
             </form>
             <div style={{ display: 'grid' }}>
-              <a className={styles.login__links} href="RegisterServlet.do">
-                ¿Nuevo en Foodie? Crear cuenta
-              </a>
+              <Link className={styles.login__links} href="/auth/register">
+                  ¿Nuevo en Foodie? Crear cuenta
+              </Link>
+
             </div>
           </div>
         </div>

@@ -19,12 +19,12 @@ function Header() {
             </Link>
           </li>
           <li className={styles.header__nav__ul__li}>
-            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/acerca">
-              Carrito
+            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/shopping">
+              Tu Perfil
             </Link>
           </li>
           <li className={styles.header__nav__ul__li}>
-            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/acerca">
+            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/abaut">
               Contacto
             </Link>
           </li>
