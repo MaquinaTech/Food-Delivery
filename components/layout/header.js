@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import { useAuth } from '../hoc/auth';
 import styles from '../../styles/Header.module.scss';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { logout } = useAuth();
 
   function handleMenuClick() {
     setIsMenuOpen(!isMenuOpen);
@@ -27,6 +29,11 @@ function Header() {
             <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/abaut">
               Contacto
             </Link>
+          </li>
+          <li className={styles.header__nav__ul__li}>
+            <div className={`${styles.header__nav__a} ${styles.header__nav__link}`} onClick={logout}>
+              Cerrar Sesión
+            </div>
           </li>
         </ul>
       </nav>

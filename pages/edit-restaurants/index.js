@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
+import withAuth from "../components/hoc/withAuth";
 import Ratings from '../../components/hoc/Ratings';
 import Restaurant from '../../components/hoc/Restaurant';
 import Order from '../../components/hoc/Order';
 import Link from 'next/link';
 import styles from "../../styles/styles.module.scss";
+
 
 
 function EditRestaurants() {

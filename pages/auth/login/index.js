@@ -9,23 +9,18 @@ import styles from '../../../styles/styles.module.scss';
 
 export default function Login() {
   const router = useRouter();
-  const { login } = useAuth();
+  const auth = useAuth();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Aquí debes hacer la petición a la API para validar el token
-      // Si el token es válido, utiliza la función login del useAuth
-      // para establecer el token en el contexto de autenticación
-      // y permitir que el usuario acceda a la aplicación web.
-      const newToken = '...';
-      if (newToken) {
-        login(newToken);
-      }
+    const { error } = router.query;
+    if(error){
+      toast.error(error);
     }
   }, []);
+  
 
   const handleSubmit = async (values) => {
+    values.preventDefault();
     if (!values.username || !values.password) {
       toast.error('Por favor, complete todos los campos');
     } else {
@@ -34,11 +29,19 @@ export default function Login() {
         const {data} = await getToken(values.username, values.password);
         if (data) {
         // Make login in React Context
-          login(data);
-        // Redirect to search page
-          router.push('/search');
+        auth
+        .login(data)
+        .then(() => {
+          // Redirect to search page
+          router.push("/search");
+        })
+        .catch((error) => {
+          // Show error message
+          toast.error(error.message);
+        });
         }
       } catch (error) {
+        // Show error message
         toast.error('Ocurrió un error al intentar iniciar sesión');
       }
     }

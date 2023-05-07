@@ -1,64 +1,58 @@
 import React from 'react';
-import { Formik, Field } from 'formik';
+import Link from 'next/link';
+import withAuth from '../../components/hoc/withAuth';
 import { useRouter } from 'next/router';
-import styles from '../styles/styles.module.scss';
+import { toast } from 'react-toastify';
+import ProfileConfig from '../../components/hoc/ProfileConfig';
+import ChangePassword from '../../components/hoc/ChangePassword';
+import styles from '../../styles/styles.module.scss';
 
-const Login = () => {
+function Profile() {
   const router = useRouter();
-  
+ 
 
-  const handleLogin = async (values) => {
-    try {
-      
-    } catch (error) {
-      console.log(error);
+  const handleSubmit = async (values) => {
+    if (!values.username || !values.password) {
+      toast.error('Por favor, complete todos los campos');
+    } else {
+      try {
+        // Make login request
+        const {data} = await getToken(values.username, values.password);
+        if (data) {
+          toast.success('Datos guardados correctamente');
+        }
+      } catch (error) {
+        toast.error('Ocurrió un error al intentar iniciar sesión');
+      }
     }
   };
 
   return (
-    <div className={styles.login}>
-      <div className={styles.login__content}>
-        <div className={styles.login__content__title}>Iniciar sesión</div>
-        <div className={styles.login__content__form}>
-          <Formik
-            initialValues={{
-              email: '',
-              password: '',
-            }}
-            onSubmit={(values, actions) => {
-              handleLogin(values);
-            }}
-          >
-            {({ values, handleChange }) => (
-              <form>
-                <div className={styles.login__content__form__item}>
-                  <label htmlFor="email">Email</label>
-                  <Field
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                    value={values.email}
-                  />
-                </div>
-                <div className={styles.login__content__form__item}>
-                  <label htmlFor="password">Contraseña</label>
-                  <Field
-                    type="password"
-                    name="password"
-                    placeholder="Contraseña"
-                    onChange={handleChange}
-                    value={values.password}
-                  />
-                </div>
-                <div className={styles.login__content__form__item}>
-                  <button type="submit">Iniciar sesión</button>
-                </div>
-              </form>
-            )}
-          </Formik>
+      <div className={styles.profile}>
+
+        <div className={styles.profile__back}>
+          <Link href="/list-restaurants">
+            <img src="/back.svg" alt="back"/>  Volver atrás
+          </Link>
         </div>
+
+        <div className={styles.profile__box}>
+          <div className={styles.profile__box__forms}>
+            <ProfileConfig handleSubmit={handleSubmit}/>
+            <ChangePassword />
+          </div>
+          <div className={styles.profile__box__account}>
+            <div className={styles.profile__box__account__danger}>
+              <div className={styles.profile__box__account__danger__title}>Eliminar cuenta</div>
+              <p className={styles.profile__box__account__danger__text}>
+                Si eliminas tu cuenta, no podrás recuperarla. Todos tus datos serán eliminados permanentemente.
+              </p>
+              <button className={styles.profile__box__danger__button}>Eliminar cuenta</button>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
   );
 }
+export default withAuth(Profile);
