@@ -1,9 +1,9 @@
 import React, {useState, useCallback} from 'react';
 import Dishes from './Dishes';
-import styles from "../../styles/styles.module.scss";
 import { Formik, Form, Field } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import styles from "../../styles/styles.module.scss";
 
 
 const Restaurant = (props) => {

@@ -1,114 +1,126 @@
 import React from 'react';
+import { Formik, Field, Form } from 'formik';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 import styles from '../styles/styles.module.scss';
-import { Form, FormGroup, Row, Col, Button, Label, Input  } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SearchFilter = (props ) => {
   const {title} = props;
+  const animatedComponents = makeAnimated();
+  const categories = [
+    {
+      value: 'Burguer',
+      label: 'Burguer'
+    },
+    {
+      value: 'Pizza',
+      label: 'Pizza'
+    },
+    {
+      value: 'Sushi',
+      label: 'Sushi'
+    },
+    {
+      value: 'Italiano',
+      label: 'Italiano'
+    },
+    {
+      value: 'Kebab',
+      label: 'Kebab'
+    },
+  ];
+
+  const filter = () => {
+    console.log('filter');
+  }
 
   return (
-    <div className={styles.searchFilter}>
-      <h1>{title}</h1>
-      <div className={styles.searchFilter__content}>
-        <Form>
-        <Row>
-            <Col md={6}>
-            <FormGroup>
-                <Label for="restaurantName">
-                Nombre del restaurante
-                </Label>
-                <Input
+    <div className={styles.searchFilter__content}>
+      <div className={styles.searchFilter__content__title}>
+        {title}
+      </div>
+      <div className={styles.searchFilter__content__list}>
+      <Formik
+        initialValues={{
+            restaurantName: '',
+            category: [],
+            address: '',
+            city: '',
+            country: '',
+            bikeFriendly: false
+        }}
+        onSubmit={(values, actions) => {
+            // submit code goes here
+        }}
+      >
+        {({values, handleChange}) => (
+            <Form>
+            <div className={styles.searchFilter__content__list__item}>
+                <label htmlFor="restaurantName">Nombre del restaurante</label>
+                <Field
                 id="restaurantName"
                 name="restaurantName"
                 placeholder="nombre del restaurante"
                 type="text"
+                className="form-control"
                 />
-            </FormGroup>
-            </Col>
-            <Col md={6}>
-            <FormGroup>
-                <Label for="category">
-                Categoría
-                </Label>
-                <Input
-                id="category"
-                name="category"
-                placeholder="Categoría"
-                type="select"
-                multiple
-                >   
-                     <option onClick={() => {}}>
-                        Burguer
-                    </option>
-                    <option>
-                        Pizza
-                    </option>
-                    <option>
-                        Sushi
-                    </option>
-                    <option>
-                        Italiano
-                    </option>
-                    <option>
-                        Kebab
-                    </option>
-                    </Input>
-            </FormGroup>
-            </Col>
-        </Row>
-        <FormGroup>
-            <Label for="address">
-            Dirección
-            </Label>
-            <Input
-            id="address"
-            name="address"
-            placeholder="Calle x"
-            />
-        </FormGroup>
-        <Row>
-            <Col md={6}>
-            <FormGroup>
-                <Label for="city">
-                Ciudad
-                </Label>
-                <Input
-                id="city"
-                name="city"
+            </div>
+
+            <div className={styles.searchFilter__content__list__item}>
+                <label htmlFor="category">Categoría</label>
+                <Select
+                  //defaultValue={categories[0]}
+                  isMulti
+                  name="colors"
+                  options={categories}
+                  components={animatedComponents}
+                  closeMenuOnSelect={false}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  menuPlacement="auto"
+                  menuPosition="absolute"
+                  menuShouldScrollIntoView={true}
+                  placeholder="Categoría"
+                  
                 />
-            </FormGroup>
-            </Col>
-            <Col md={6}>
-            <FormGroup>
-                <Label for="country">
-                País
-                </Label>
-                <Input
-                id="country"
-                name="country"
+            </div>
+
+            <div className={styles.searchFilter__content__list__item}>
+                <label htmlFor="address">Dirección:</label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  value={values.address}
+                  onChange={handleChange}
+                  list="address-list"
                 />
-            </FormGroup>
-            </Col>
-        </Row>
-        <FormGroup check>
-            <Input
-            id="bikeFriendly"
-            name="bikeFriendly"
-            type="checkbox"
-            />
-            <Label
-            check
-            for="bikeFriendly"
-            >
-            ¿Bike Friendly?
-            </Label>
-        </FormGroup>
-        <div className={styles.searchFilter__content__button}>
-            <Button  color="warning">
+                <datalist id="address-list">
+                  <option value="Calle prueba 1" />
+                  <option value="Calle prueba 2" />
+                  <option value="Calle prueba 3" />
+                  {/* ... */}
+                </datalist>
+            </div>
+
+            <div className="form-check">
+                <Field
+                id="bikeFriendly"
+                name="bikeFriendly"
+                type="checkbox"
+                className="form-check-input"
+                />
+                <label htmlFor="bikeFriendly" className="form-check-label">
+                ¿Bike Friendly?
+                </label>
+            </div>
+
+            <button type="submit" className="btn btn-warning">
                 Filtrar
-            </Button>
-        </div>
-        </Form>
+            </button>
+            </Form>
+        )}
+        </Formik>
       </div>
     </div>
   );

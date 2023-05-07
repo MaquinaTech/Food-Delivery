@@ -5,7 +5,7 @@
  * @param {string} token auth
  * @returns
  */
-export const login = async (email, password) => {
+export const getToken = async (email, password) => {
     const url ="localhost:3000/rest/login";
     try {
       const response = await fetch(url, {

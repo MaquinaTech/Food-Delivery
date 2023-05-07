@@ -19,7 +19,7 @@ function Header() {
             </Link>
           </li>
           <li className={styles.header__nav__ul__li}>
-            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/shopping">
+            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/profile">
               Tu Perfil
             </Link>
           </li>
