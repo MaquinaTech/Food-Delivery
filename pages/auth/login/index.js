@@ -20,12 +20,12 @@ export default function Login() {
   
 
   const handleSubmit = async (values) => {
-    values.preventDefault();
     if (!values.username || !values.password) {
       toast.error('Por favor, complete todos los campos');
     } else {
       try {
         // Make login request
+        console.log(values);
         const {data} = await getToken(values.username, values.password);
         if (data) {
         // Make login in React Context

@@ -1,42 +1,45 @@
 
 
 /**
- * Get user
- * @param {string} token auth
- * @returns
+ * Get user token
+ * @param {string} email User email
+ * @param {string} password User password
+ * @returns {object} Object with error or data properties
  */
 export const getToken = async (email, password) => {
-    const url ="localhost:3000/rest/login";
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        },
-      });
-      const data = await response.json();
-      if (data.errors) {
-        return {
-          error: data.errors,
-          data: null,
-        };
-      } else {
-        return {
-          error: null,
-          data: data.data,
-        };
-      }
-    } catch (error) {
+  const url = "http://127.0.0.1:8080/FoodDelivery/rest/auth/prueba";
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      /*body: JSON.stringify({
+        email: email,
+        password: password,
+      }),*/
+    });
+
+    const data = await response.json();
+
+    if (data.status) {
       return {
-        error: error,
+        error: data.status,
         data: null,
       };
+    } else {
+      return {
+        error: null,
+        data: data.data,
+      };
     }
+  } catch (error) {
+    return {
+      error: error,
+      data: null,
+    };
+  }
 };
 
 /**
