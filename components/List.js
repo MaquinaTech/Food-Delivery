@@ -8,10 +8,11 @@ const List = ({ restaurants, name }) => {
 
   const router = new useRouter();
   //Def. item list
-  const renderItem = (index, key) => {
+  const renderItem = (index) => {
     const restaurant = restaurants[index];
     return (
-      <ListGroupItem onClick={() => {router.push('/edit-restaurants')}} key={key} className={styles.reactList__item}>
+      <ListGroupItem key={restaurant.id} onClick={() => {router.push(`/restaurant/${restaurant.id}`)}} className={styles.reactList__item}>
+
         <div className={styles.reactList__item__info}>
           <div className={styles.reactList__item__info__name}>
             {restaurant.name}

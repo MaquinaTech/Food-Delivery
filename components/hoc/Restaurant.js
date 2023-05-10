@@ -8,12 +8,10 @@ import styles from "../../styles/styles.module.scss";
 
 
 const Restaurant = (props) => {
-  const { setOrderList, orderList} = props;
+  const { restaurant, setOrderList, orderList} = props;
   const [isEditable, setIsEditable] = useState(false);
   const { authenticated } = useAuth();
-  const [restaurant, setRestaurant] = useState(
-    {name: 'Burguer King', address: 'Calle prueba', email: 'burguerking@burguer.com', phone:'999999999', category:'Burguer', priceRange:'10 - 20'}
-  );
+  const [restaurantState, setRestaurantState] = useState(restaurant);
 
   const dishes = [
     { name: "Ensalada César", price: 10.5, type: 0, description: "Lechuga, pollo, parmesano y crutones" },
@@ -35,11 +33,11 @@ const Restaurant = (props) => {
       toast.error('Por favor, complete los campos requeridos', { autoClose: 3500 });
     } else {
       toast.success('Restaurante actualizado', { autoClose: 3500 });
-      setRestaurant([restaurant,values]);
+      setRestaurantState([...restaurant,values]);
       setDisabled(true);
     }
-    
   }
+  console.log(restaurantState);
 
   return (
     <div className={styles.EditRestaurants__box}>
@@ -54,12 +52,12 @@ const Restaurant = (props) => {
         <div className={styles.EditRestaurants__box__info}>
           <Formik
             initialValues={{
-              address: restaurant.address,
-              phone: restaurant.phone,
-              email: restaurant.email,
-              priceRange: restaurant.priceRange,
-              category: restaurant.category,
-              bikeFriendly: restaurant.bikeFriendly,
+              address: "",
+              phone: "",
+              email: "",
+              priceRange: "",
+              category: "",
+              bikeFriendly: "",
             }}
             
             onSubmit={(values) => {

@@ -86,6 +86,84 @@ export const verifyToken = async (token) => {
 
 
 /**
+ * Get restaurants
+ * @param {string} token auth
+ * @returns
+ */
+export const getRestaurants = async (token) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants";
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    const data = await response.json();
+    if (data.error) {
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+/**
+ * Get restaurants
+ * @param {string} token auth
+ * @param {float} id restaurant
+ * @returns
+ */
+export const getRestaurant = async (token, id) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants";
+  try {
+    const formData = new URLSearchParams();
+    formData.append("idR", id);
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+
+/**
  * Get user details
  * @param {string} token auth
  * @returns
@@ -174,83 +252,6 @@ export const updateUser = async (token, user) => {
           body: JSON.stringify({
             user: user,
           }),
-        },
-      });
-      const data = await response.json();
-      if (data.errors) {
-        return {
-          error: data.errors,
-          data: null,
-        };
-      } else {
-        return {
-          error: null,
-          data: data.data,
-        };
-      }
-    } catch (error) {
-      return {
-        error: error,
-        data: null,
-      };
-    }
-}
-
-/**
- * Create user
- * @param {string} token auth
- * @returns
- */
-
-/**
- * Get restaurants
- * @param {string} token auth
- * @returns
- */
-export const getRestaurants = async (token) => {
-    const url ="localhost:3000/rest/restaurants";
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      });
-      const data = await response.json();
-      if (data.errors) {
-        return {
-          error: data.errors,
-          data: null,
-        };
-      } else {
-        return {
-          error: null,
-          data: data.data,
-        };
-      }
-    } catch (error) {
-      return {
-        error: error,
-        data: null,
-      };
-    }
-}
-
-/**
- * Get restaurant
- * @param {string} token auth
- * @param {string} id restaurant id
- * @returns
- */
-export const getRestaurant = async (token, id) => {
-    const url ="localhost:3000/rest/restaurants/" + id;
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
         },
       });
       const data = await response.json();
