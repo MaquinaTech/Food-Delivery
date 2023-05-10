@@ -48,7 +48,7 @@ export const getToken = async (email, password) => {
  * @param {Token} token User token
  * @returns {boolean} Object with error or data properties
  */
-export const verfyToken = async (token) => {
+export const verifyToken = async (token) => {
   const url = "http://127.0.0.1:8080/FoodDelivery/rest/auth/verify";
 
   try {

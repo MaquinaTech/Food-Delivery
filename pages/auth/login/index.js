@@ -25,23 +25,18 @@ export default function Login() {
     } else {
       try {
         // Make login request
-        console.log("Lanzamos login");
         const {data} = await getToken(values.username, values.password);
-        console.log(data);
         if (data) {
-        // Make login in React Context
-        auth
-        .login(data)
-        .then(() => {
-          // Redirect to search page
+          // Make login in React Context
+          console.log("Logeamos");
+          console.log(data);
+          auth.login(data);
           router.push("/search");
-        })
-        .catch((error) => {
-          // Show error message
-          toast.error(error.message);
-        });
+        } else {
+          toast.error('Ocurrió un error al intentar iniciar sesión');
         }
-      } catch (error) {
+      }
+      catch (error) {
         // Show error message
         toast.error('Ocurrió un error al intentar iniciar sesión');
       }

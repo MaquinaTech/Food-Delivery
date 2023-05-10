@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {verifyToken} from '../api/auxiliar';
+import {verifyToken} from '../auxiliar';
 
 export const setToken = (token) => {
   console.log("Seteamos token");
   console.log(token);
   localStorage.setItem('token', token);
+  const token2 = localStorage.getItem('token');
+  console.log(token2);
 };
 
 export const useAuth = () => {
@@ -17,8 +19,10 @@ export const useAuth = () => {
         try {
           const {data} = await verifyToken(token);
           if (data) {
+            console.log("Token valido");
               setAuthenticated(true);
           } else {
+            console.log("Token NO valido");
             localStorage.removeItem('token');
           }
         } catch (error) {
@@ -32,7 +36,7 @@ export const useAuth = () => {
 
   const login = (token) => {
     setAuthenticated(true);
-    setToken(token);
+    setToken(token.value);
   };
 
   const logout = () => {
