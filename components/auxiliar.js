@@ -7,18 +7,19 @@
  * @returns {object} Object with error or data properties
  */
 export const getToken = async (email, password) => {
-  const url = "http://127.0.0.1:8080/FoodDelivery/rest/auth/prueba";
+  const url = "http://127.0.0.1:8080/FoodDelivery/rest/auth";
 
   try {
+    const formData = new URLSearchParams();
+    formData.append("email", email);
+    formData.append("password", password);
+
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      /*body: JSON.stringify({
-        email: email,
-        password: password,
-      }),*/
+      body: formData.toString(),
     });
 
     const data = await response.json();
@@ -42,20 +43,22 @@ export const getToken = async (email, password) => {
   }
 };
 
+
 /**
- * Get user
+ * Get user details
  * @param {string} token auth
  * @returns
  * 
  */
 export const getUser = async (token) => {
-    const url ="localhost:3000/rest/login";
+    const url ="localhost:3000/rest/users/UserEdit";
     try {
       const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
+          
         },
       });
       const data = await response.json();
