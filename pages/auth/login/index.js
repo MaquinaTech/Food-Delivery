@@ -25,8 +25,9 @@ export default function Login() {
     } else {
       try {
         // Make login request
-        console.log(values);
+        console.log("Lanzamos login");
         const {data} = await getToken(values.username, values.password);
+        console.log(data);
         if (data) {
         // Make login in React Context
         auth

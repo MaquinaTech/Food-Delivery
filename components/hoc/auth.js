@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { login } from '../auxiliar';
+import {verifyToken} from '../api/auxiliar';
 
 export const setToken = (token) => {
+  console.log("Seteamos token");
+  console.log(token);
   localStorage.setItem('token', token);
 };
 
@@ -13,15 +15,9 @@ export const useAuth = () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await fetch(`/api/verifyToken?token=${token}`);
-          if (response.ok) {
-            const data = await response.json();
-            const tokenExpirationDate = new Date(data.expiresAt);
-            if (tokenExpirationDate > new Date()) {
+          const {data} = await verifyToken(token);
+          if (data) {
               setAuthenticated(true);
-            } else {
-              localStorage.removeItem('token');
-            }
           } else {
             localStorage.removeItem('token');
           }

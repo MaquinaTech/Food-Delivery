@@ -24,15 +24,56 @@ export const getToken = async (email, password) => {
 
     const data = await response.json();
 
-    if (data.status) {
+    if (data == undefined || data.status == 401) {
       return {
-        error: data.status,
+        error: data,
         data: null,
       };
     } else {
       return {
         error: null,
-        data: data.data,
+        data: data,
+      };
+    }
+  } catch (error) {
+    return {
+      error: error,
+      data: null,
+    };
+  }
+};
+
+/**
+ * Get user token
+ * @param {Token} token User token
+ * @returns {boolean} Object with error or data properties
+ */
+export const verfyToken = async (token) => {
+  const url = "http://127.0.0.1:8080/FoodDelivery/rest/auth/verify";
+
+  try {
+    const formData = new URLSearchParams();
+    formData.append("token", token);
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString(),
+    });
+
+    const data = await response.json();
+
+    if (data == undefined || data.status == 401) {
+      return {
+        error: data,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
       };
     }
   } catch (error) {
