@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import withAuth from '../../components/hoc/withAuth';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import ProfileConfig from '../../components/hoc/ProfileConfig';
@@ -55,4 +54,4 @@ function Profile() {
       </div>
   );
 }
-export default withAuth(Profile);
+export default Profile;

@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from "../../styles/styles.module.scss";
 import Slide from '../../components/Slide';
-import withAuth from "../../components/hoc/withAuth";
 import { useRouter } from 'next/router';
 
 
@@ -40,4 +39,4 @@ function Search() {
       </div>
     );
 }      
-export default withAuth(Search);
+export default Search;

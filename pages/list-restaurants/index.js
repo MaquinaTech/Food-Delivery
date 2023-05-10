@@ -1,5 +1,4 @@
 import React from 'react';
-import withAuth from "../../components/hoc/withAuth";
 import styles from "../../styles/styles.module.scss";
 import Slide from '../../components/Slide';
 import List from '../../components/List';
@@ -38,4 +37,4 @@ function ListRestaurants() {
       </div>
     );
 }      
-export default withAuth(ListRestaurants);
+export default ListRestaurants;

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import withAuth from "../components/hoc/withAuth";
 import Ratings from '../../components/hoc/Ratings';
 import Restaurant from '../../components/hoc/Restaurant';
 import Order from '../../components/hoc/Order';
