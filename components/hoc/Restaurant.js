@@ -8,22 +8,9 @@ import styles from "../../styles/styles.module.scss";
 
 
 const Restaurant = (props) => {
-  const { restaurant, setOrderList, orderList} = props;
+  const { restaurant, categories, dishes, setOrderList, orderList} = props;
   const [isEditable, setIsEditable] = useState(false);
   const { authenticated } = useAuth();
-
-  const dishes = [
-    { name: "Ensalada César", price: 10.5, type: 0, description: "Lechuga, pollo, parmesano y crutones" },
-    { name: "Paella", price: 18, type: 1, description: "Arroz con mariscos" },
-    { name: "Tarta de manzana", price: 5, type: 2, description: "Tarta de manzana casera con helado" },
-    { name: "Refresco", price: 2, type: 3, description: "Refresco de cola" },
-    { name: "Pizza Margarita", price: 12, type: 1, description: "Pizza con tomate, mozzarella y albahaca" },
-    { name: "Agua", price: 1.5, type: 3, description: "Agua mineral" },
-    { name: "Crema Catalana", price: 6, type: 2, description: "Postre típico catalán" },
-    { name: "Sopa de cebolla", price: 8, type: 0, description: "Sopa de cebolla con queso gratinado" },
-    { name: "Coca-Cola", price: 2, type: 3, description: "Refresco de cola" },
-    { name: "Pasta a la carbonara", price: 13, type: 1, description: "Pasta con salsa de nata, huevo y bacon" }
-  ];
 
   const [disabled, setDisabled] = useState(true);
 
@@ -38,6 +25,8 @@ const Restaurant = (props) => {
   }
   console.log("-------------");
   console.log(restaurant);
+  console.log(dishes);
+  console.log(categories);
 
   return (
     <div className={styles.EditRestaurants__box}>
@@ -53,7 +42,8 @@ const Restaurant = (props) => {
           <Formik
           enableReinitialize={true}
           initialValues={{
-            ...(restaurant ? { ...restaurant } : null)
+            ...(restaurant ? { ...restaurant } : null),
+            category: categories && categories[0] && categories[0].name,
           }}
             
             onSubmit={(values) => {
