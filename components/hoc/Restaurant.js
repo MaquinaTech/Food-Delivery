@@ -11,7 +11,6 @@ const Restaurant = (props) => {
   const { restaurant, setOrderList, orderList} = props;
   const [isEditable, setIsEditable] = useState(false);
   const { authenticated } = useAuth();
-  const [restaurantState, setRestaurantState] = useState(restaurant);
 
   const dishes = [
     { name: "Ensalada César", price: 10.5, type: 0, description: "Lechuga, pollo, parmesano y crutones" },
@@ -37,7 +36,8 @@ const Restaurant = (props) => {
       setDisabled(true);
     }
   }
-  console.log(restaurantState);
+  console.log("-------------");
+  console.log(restaurant);
 
   return (
     <div className={styles.EditRestaurants__box}>
@@ -47,18 +47,14 @@ const Restaurant = (props) => {
               className={styles.login__logo}
               alt="LogoRestaurnt"
             />
-            <span>Burguer King</span>
+            <span>{restaurant && restaurant.name}</span>
         </div>
         <div className={styles.EditRestaurants__box__info}>
           <Formik
-            initialValues={{
-              address: "",
-              phone: "",
-              email: "",
-              priceRange: "",
-              category: "",
-              bikeFriendly: "",
-            }}
+          enableReinitialize={true}
+          initialValues={{
+            ...(restaurant ? { ...restaurant } : null)
+          }}
             
             onSubmit={(values) => {
               handleSubmit(values)
@@ -75,24 +71,25 @@ const Restaurant = (props) => {
 
                     <div className={styles.EditRestaurants__box__info__form__left__item}>
                       <span>Teléfono</span>
-                      <Field type="text" name="phone" disabled={!isEditable} />
+                      <Field type="text" name="telephone" id="telephone" disabled={!isEditable} />
                     </div>
 
                     <div className={styles.EditRestaurants__box__info__form__left__item}>
                       <span>Correo de contacto</span>
-                      <Field type="email" name="email" disabled={!isEditable} />
+                      <Field type="email" name="contactEmail" id="contactEmail" disabled={!isEditable} />
                     </div>
                   </div>
 
                   <div className={styles.EditRestaurants__box__info__form__right}>
                     <div className={styles.EditRestaurants__box__info__form__right__item}>
                       <span>Rango de precio</span>
-                      <Field type="text" name="priceRange" disabled={!isEditable} />
+                      <Field type="text" name="minPrice" id="minPrice" disabled={!isEditable} />
+                      <Field type="text" name="maxPrice" id="maxPrice" disabled={!isEditable} />
                     </div>
 
                     <div className={styles.EditRestaurants__box__info__form__right__item}>
                       <span>Categoría</span>
-                      <Field type="text" name="category" disabled={!isEditable} />
+                      <Field type="text" name="category" id="category" disabled={!isEditable} />
                     </div>
 
                   </div>

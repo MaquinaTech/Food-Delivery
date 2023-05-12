@@ -131,7 +131,8 @@ export const getRestaurant = async (token, id) => {
   try {
     const formData = new URLSearchParams();
     formData.append("idR", id);
-
+    console.log("Id enviado: ");
+    console.log(id);
     const response = await fetch(url, {
       method: "POST",
       headers: {

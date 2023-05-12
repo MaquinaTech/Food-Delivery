@@ -13,24 +13,23 @@ function EditRestaurants() {
   const [orderList, setOrderList] = useState([]);
   const [restaurant, setRestaurant] = useState(null);
   const router = useRouter();
-  const { id } = router.query;
+  const id = router.query.id;
 
   useEffect(() => {
     const searchRestaurant = async () => {
-      try {
+      
+      console.log("-----------------");
+      console.log(id);  
+      if(id){
         const token = localStorage.getItem('token');
         const restaurantGet = await getRestaurant(token,id);
-        setRestaurant(restaurantGet.data);
         
-      } catch (error) {
-        console.error('Error al obtener los datos del restaurante:', error);
+        setRestaurant(restaurantGet.data);  
       }
-      console.log(restaurant);
     };
 
     searchRestaurant();
-  }, []);
-  
+  }, [id]);
     return (
         <div className={styles.EditRestaurants}>
           <div className={styles.EditRestaurants__back}>
