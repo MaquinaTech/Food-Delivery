@@ -12,15 +12,13 @@ const Restaurant = (props) => {
   const [isEditable, setIsEditable] = useState(false);
   const { authenticated } = useAuth();
 
-  const [disabled, setDisabled] = useState(true);
-
   const handleSubmit = (values) => {
     if (!values.address && !values.phone && !values.email && !values.priceRange && !values.category) {
       toast.error('Por favor, complete los campos requeridos', { autoClose: 3500 });
     } else {
       toast.success('Restaurante actualizado', { autoClose: 3500 });
       setRestaurantState([...restaurant,values]);
-      setDisabled(true);
+      setIsEditable(false);
     }
   }
   return (
@@ -68,8 +66,9 @@ const Restaurant = (props) => {
                   <div className={styles.EditRestaurants__box__info__form__right}>
                     <div className={styles.EditRestaurants__box__info__form__right__item}>
                       <span>Rango de precio</span>
-                      <Field type="text" name="minPrice" id="minPrice" disabled={!isEditable} />
-                      <Field type="text" name="maxPrice" id="maxPrice" disabled={!isEditable} />
+                        <Field type="text" name="rangePrice" id="rangePrice" value={values.minPrice + " - " + values.maxPrice } disabled={!isEditable} />
+                        <Field hidden type="text" name="minPrice" id="minPrice" disabled={!isEditable} />
+                        <Field hidden type="text" name="maxPrice" id="maxPrice" disabled={!isEditable} />
                     </div>
 
                     <div className={styles.EditRestaurants__box__info__form__right__item}>

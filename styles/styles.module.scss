@@ -474,6 +474,7 @@
   }
   &__box {
     width: 40%;
+    min-width: fit-content;
     //max-height: fit-content;
     overflow-y: scroll;
     &::-webkit-scrollbar {
@@ -505,9 +506,6 @@
       }
     }
     &__info {
-      display:flex;
-      justify-content: space-evenly;
-      justify-items: center;
       padding-bottom:10px;
       padding-top:20px;
       line-height: 30px;
@@ -517,20 +515,29 @@
         display:flex;
         justify-content: space-evenly;
         justify-items: center;
+        
         input {
+          text-align: center;
           border:none;
           outline: none;
           background-color: transparent !important;
         }
         &__left {
+          display:grid;
+          text-align: center;
+          align-content: space-between;
+          max-width: 50%;
           &__item {
             display:grid;
+            text-align: center;
             padding-right:20px; 
           }
         }
         &__right {
           display:grid;
+          text-align: center;
           align-content: space-between;
+          max-width: 50%;
           &__item {
             display:grid;
           }
@@ -586,6 +593,7 @@
             width:100%;
             height:100%;
             object-fit: cover;
+            border-radius: 15px;
           }
         }
       }
