@@ -475,7 +475,7 @@
   &__box {
     width: 40%;
     //max-height: fit-content;  
-    overflow-y: hidden;
+    overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
     }
