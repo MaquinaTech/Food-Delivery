@@ -41,7 +41,7 @@ function ListRestaurants() {
               </div>
             </div>
             <div className={styles.ListRestaurants__content__list}>
-              <List restaurants={restaurants}/>
+              <List restaurants={restaurants ? restaurants : []}/>
             </div>
           </div>
       </div>

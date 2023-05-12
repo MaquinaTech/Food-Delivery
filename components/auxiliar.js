@@ -88,7 +88,7 @@ export const verifyToken = async (token) => {
 /**
  * Get restaurants
  * @param {string} token auth
- * @returns
+ * @returns {object} Object with error or data properties
  */
 export const getRestaurants = async (token) => {
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants";
@@ -124,7 +124,7 @@ export const getRestaurants = async (token) => {
  * Get restaurants
  * @param {string} token auth
  * @param {float} id restaurant
- * @returns
+ * @returns {object} Object with error or data properties
  */
 export const getRestaurant = async (token, id) => {
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants";
@@ -163,3 +163,87 @@ export const getRestaurant = async (token, id) => {
   }
 }
 
+
+/**
+ * Get user details
+ * @param {string} token auth
+ * @returns {object} Object with error or data properties
+ */
+export const getUser = async (token) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/users";
+  try {
+    const formData = new URLSearchParams();
+    formData.append("token", token);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+/**
+ * Update user
+ * @param {string} token auth
+ * @param {object} values user data
+ * @returns {object} Object with error or data properties
+ */
+export const updateUser = async (token, values) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/users/update";
+  try {
+    const formData = new URLSearchParams();
+    formData.append("name", values.name);
+    formData.append("surname", values.surname);
+    formData.append("email", values.email);
+    formData.append("id", values.id);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
