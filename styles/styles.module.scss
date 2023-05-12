@@ -506,7 +506,7 @@
       }
     }
     &__info {
-      padding-bottom:10px;
+      padding-bottom:50px;
       padding-top:20px;
       line-height: 30px;
       font-size: large;
@@ -585,25 +585,25 @@
           width:250px;
           height:250px;
           min-height:100px;
+          margin-bottom:15px;
           display:flex;
           justify-content: center;
           align-items: center;
-          padding:10px;
           img {
             width:100%;
             height:100%;
-            object-fit: cover;
-            border-radius: 15px;
+            object-fit: fill;
           }
         }
       }
 
       h3 {
-        position: sticky;
         top: 0;
-        width:fit-content;
         margin-top: 0;
-        padding-top: 40px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 10%;
+        
       }
 
       ul {
@@ -618,6 +618,22 @@
         width:100%;
         cursor:pointer;
       }
+    }
+    //Linea curva blanca decorative
+    &__whiteSpace {
+      width: 100%;
+      margin-top:-2px;
+      min-height: 20px;
+      background-color: white;
+      border-radius: 0px 0px 15px 15px;
+      box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.3);
+    }
+    &__orangeSpace {
+      width: 100%;
+      min-height: 20px;
+      background-color: brown;
+      border-radius: 5px 5px 15px 15px;
+      box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.3);
     }
   }
   
@@ -660,6 +676,8 @@
       color: grey;
     }
   }
+
+  
 }
 
 // ------------- Profile Config ------------- //

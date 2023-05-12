@@ -19,6 +19,7 @@ const Order = (props) => {
 
   return (
         <div className={styles.EditRestaurants__order}>
+          <div className={styles.EditRestaurants__box__orangeSpace}/>
           <div className={styles.EditRestaurants__order__title}>
             <h3>Tu Pedido</h3>
           </div>

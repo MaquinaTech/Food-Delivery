@@ -9,8 +9,6 @@ import styles from "../../styles/styles.module.scss";
 
 const Restaurant = (props) => {
   const { restaurant, categories, dishes, setOrderList, orderList} = props;
-  const [isEditable, setIsEditable] = useState(false);
-  const { authenticated } = useAuth();
 
   const handleSubmit = (values) => {
     if (!values.address && !values.phone && !values.email && !values.priceRange && !values.category) {
@@ -18,7 +16,6 @@ const Restaurant = (props) => {
     } else {
       toast.success('Restaurante actualizado', { autoClose: 3500 });
       setRestaurantState([...restaurant,values]);
-      setIsEditable(false);
     }
   }
   return (
@@ -49,53 +46,40 @@ const Restaurant = (props) => {
                   <div className={styles.EditRestaurants__box__info__form__left}>
                     <div className={styles.EditRestaurants__box__info__form__left__item}>
                       <span>Dirección</span>
-                      <Field type="text" name="address" disabled={!isEditable} />
+                      <Field type="text" name="address" disabled={true} />
                     </div>
 
                     <div className={styles.EditRestaurants__box__info__form__left__item}>
                       <span>Teléfono</span>
-                      <Field type="text" name="telephone" id="telephone" disabled={!isEditable} />
+                      <Field type="text" name="telephone" id="telephone" disabled={true} />
                     </div>
 
                     <div className={styles.EditRestaurants__box__info__form__left__item}>
                       <span>Correo de contacto</span>
-                      <Field type="email" name="contactEmail" id="contactEmail" disabled={!isEditable} />
+                      <Field type="email" name="contactEmail" id="contactEmail" disabled={true} />
                     </div>
                   </div>
 
                   <div className={styles.EditRestaurants__box__info__form__right}>
                     <div className={styles.EditRestaurants__box__info__form__right__item}>
                       <span>Rango de precio</span>
-                        <Field type="text" name="rangePrice" id="rangePrice" value={values.minPrice + " - " + values.maxPrice } disabled={!isEditable} />
-                        <Field hidden type="text" name="minPrice" id="minPrice" disabled={!isEditable} />
-                        <Field hidden type="text" name="maxPrice" id="maxPrice" disabled={!isEditable} />
+                        <Field type="text" name="rangePrice" id="rangePrice" value={values.minPrice + " - " + values.maxPrice } disabled={true} />
                     </div>
 
                     <div className={styles.EditRestaurants__box__info__form__right__item}>
                       <span>Categoría</span>
-                      <Field type="text" name="category" id="category" disabled={!isEditable} />
+                      <Field type="text" name="category" id="category" disabled={true} />
                     </div>
 
                   </div>
-                </div>
-                  
-                <div className={styles.EditRestaurants__box__info__buttons}>
-                { authenticated &&
-                  <>
-                    <button type="button" disabled={!isEditable} onClick={() => handleSubmit(values)}>
-                      Guardar
-                    </button>
-                    <button type="button" onClick={() => setIsEditable(!isEditable)}>
-                      {isEditable ? 'Cancelar' : 'Editar'}
-                    </button>
-                  </>
-                  } 
                 </div>
               </Form>
             )}
           </Formik>
         </div>
+        <div className={styles.EditRestaurants__box__whiteSpace}/>
         <div className={styles.EditRestaurants__box__dishes}>
+          <h3>Menú</h3>
           <Dishes dishes={dishes} setOrderList={setOrderList} orderList={orderList}/>
         </div>
         <ToastContainer />
