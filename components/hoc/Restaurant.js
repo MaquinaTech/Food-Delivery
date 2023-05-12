@@ -23,11 +23,6 @@ const Restaurant = (props) => {
       setDisabled(true);
     }
   }
-  console.log("-------------");
-  console.log(restaurant);
-  console.log(dishes);
-  console.log(categories);
-
   return (
     <div className={styles.EditRestaurants__box}>
         <div className={styles.EditRestaurants__box__title}>

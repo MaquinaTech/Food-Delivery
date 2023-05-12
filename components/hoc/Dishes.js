@@ -3,29 +3,7 @@ import { Button } from "reactstrap";
 import styles from "../../styles/styles.module.scss";
 
 const Dishes = ( props ) => {
-    const {dishes, setOrderList, orderList} = props;
-  const getDishType = (type) => {
-    switch (type) {
-      case 0:
-        return "Primeros";
-      case 1:
-        return "Segundos";
-      case 2:
-        return "Postres";
-      case 3:
-        return "Bebidas";
-      default:
-        return "";
-    }
-  };
-
-  /*const renderDishesByType = (type) => {
-    const filteredDishes = dishes.filter((dish) => dish.type === type);
-    const addDish = (index) => {
-    if (dishes[index]) {
-        setOrderList([...orderList,filteredDishes[index] ]);
-    }
-  };*/
+  const {dishes, setOrderList, orderList} = props;
 
   //Add dish
   const addDish = (index) => {
@@ -56,16 +34,6 @@ const Dishes = ( props ) => {
         </ul>
       </div>
     );
-  //};
-
-  /*return (
-    <>
-      {renderDishesByType(0)}
-      {renderDishesByType(1)}
-      {renderDishesByType(2)}
-      {renderDishesByType(3)}
-    </>
-  );*/
 };
 
 export default Dishes;
