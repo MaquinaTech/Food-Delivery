@@ -9,7 +9,7 @@ function ChangePassword(props) {
         <h1 className={styles.login__title}>Cambiar contraseña</h1>
 
         <Formik
-          initialValues={{ username: '', password: '' }}
+          initialValues={{ password1: '', password2: '' }}
           enableReinitialize={true}
           onSubmit={handleSubmit}
         >
@@ -20,20 +20,20 @@ function ChangePassword(props) {
               </label>
               <Field
                 type="password"
-                id="password"
-                name="password"
+                id="password1"
+                name="password1"
                 placeholder="Ingrese su contraseña"
                 className={styles.login__input}
               />
 
               <label className={styles.login__label} htmlFor="password">
-                Repita nueva contraseña
+                Repita su contraseña
               </label>
               <Field
                 type="password"
-                id="password"
-                name="password"
-                placeholder="Ingrese su contraseña"
+                id="password2"
+                name="password2"
+                placeholder="Repita su contraseña"
                 className={styles.login__input}
               />
 

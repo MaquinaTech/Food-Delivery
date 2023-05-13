@@ -5,11 +5,23 @@ import { toast } from 'react-toastify';
 import ProfileConfig from '../../components/hoc/ProfileConfig';
 import ChangePassword from '../../components/hoc/ChangePassword';
 import { getUser, updateUser } from '../../components/auxiliar';
+import Modal from 'react-modal';
 import styles from '../../styles/styles.module.scss';
 
 function Profile() {
   const router = useRouter();
   const [user, setUser] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+  
 
   // Get Restaurant details and dishes
   useEffect(() => {
@@ -27,22 +39,43 @@ function Profile() {
     };
     searchUser();
   }, []);
-  console.log("Usuario recogido: ", user);
 
-  const handleSubmit = async (values) => {
+  useEffect(() => {
+    const updateUserData = async () => {
+      if (user) {
+        try {
+          const { data } = await updateUser(localStorage.getItem('token'), user);
+          if (data) {
+            toast.success('Datos actualizados correctamente');
+          }
+        } catch (error) {
+          toast.error('Ocurrió un error al intentar actualizar los datos');
+        }
+      }
+    };
+
+    updateUserData();
+  }, [user]);
+
+  const updatePassword = async (values) => {
     const token = localStorage.getItem('token');
-
-    if (!values.name || !values.surname || !values.email) {
+    
+    if (!values.password1 || !values.password2) {
       toast.error('Por favor, complete todos los campos');
     } else {
-      values = {...values, id: user.id};
-      try {
-        const {data} = await updateUser(values, token);
-        if (data) {
-          toast.success('Datos actualizados correctamente');
+      if(values.password1 === values.password2){
+        values = {...values, id: user.id};
+        try {
+          const {data} = await updatePassword(token,values);
+          if (data) {
+            toast.success('Datos actualizados correctamente');
+          }
+        } catch (error) {
+          toast.error('Ocurrió un error al intentar actualizar los datos');
         }
-      } catch (error) {
-        toast.error('Ocurrió un error al intentar actualizar los datos');
+      }
+      else{
+        toast.error('Las contraseñas no coinciden');
       }
     }
 
@@ -59,8 +92,8 @@ function Profile() {
 
         <div className={styles.profile__box}>
           <div className={styles.profile__box__forms}>
-            <ProfileConfig user={user} handleSubmit={handleSubmit}/>
-            <ChangePassword />
+            <ProfileConfig user={user} setUser={setUser}/>
+            <ChangePassword handleSubmit={updatePassword} />
           </div>
           <div className={styles.profile__box__account}>
             <div className={styles.profile__box__account__danger}>
@@ -68,7 +101,18 @@ function Profile() {
               <p className={styles.profile__box__account__danger__text}>
                 Si eliminas tu cuenta, no podrás recuperarla. <br/>Todos tus datos serán eliminados permanentemente.
               </p>
-              <button className={styles.profile__box__danger__button}>Eliminar cuenta</button>
+              <button onClick={() => {setOpenModal(!openModal)}} className={styles.profile__box__danger__button}>Eliminar cuenta</button>
+              <Modal
+                isOpen={openModal}
+                onRequestClose={() => {setOpenModal(!openModal)}}
+                contentLabel="Eliminar cuenta"
+                style={customStyles}
+              >
+                <h2>¡Cuidado!</h2>
+                <button className={styles.profile__box__modal__button} onClick={() => {setOpenModal(!openModal)}}>close</button>
+                <div>Esta acción es irreversible</div>
+                  <button>Eliminar cuenta</button>
+              </Modal>
             </div>
           </div>
         </div>

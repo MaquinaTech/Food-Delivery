@@ -172,7 +172,48 @@ export const getRestaurant = async (token, id) => {
 export const getUser = async (token) => {
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/users";
   try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+/**
+ * Update user
+ * @param {string} token auth
+ * @param {object} values user data
+ * @returns {object} Object with error or data properties
+ */
+export const updateUser = async (token, values) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/users/update";
+  try {
     const formData = new URLSearchParams();
+    formData.append("name", values.name);
+    formData.append("surname", values.surname);
+    formData.append("email", values.email);
     formData.append("token", token);
     const response = await fetch(url, {
       method: "POST",
@@ -210,21 +251,15 @@ export const getUser = async (token) => {
  * @param {object} values user data
  * @returns {object} Object with error or data properties
  */
-export const updateUser = async (token, values) => {
-  const url ="http://127.0.0.1:8080/FoodDelivery/rest/users/update";
+export const deleteUser = async (token) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/users/deleteAccount";
   try {
-    const formData = new URLSearchParams();
-    formData.append("name", values.name);
-    formData.append("surname", values.surname);
-    formData.append("email", values.email);
-    formData.append("id", values.id);
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: "Bearer " + token,
       },
-      body: formData.toString(),
     });
     const data = await response.json();
     if (data.error) {

@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import styles from "../../styles/styles.module.scss";
 
 function ProfileConfig(props) {
-  const { handleSubmit, user } = props;
+  const { setUser, user } = props;
   return (
     <div>
       <div className={styles.login__box}>
@@ -12,9 +12,9 @@ function ProfileConfig(props) {
         <Formik
           initialValues={...user}
           enableReinitialize={true}
-          onSubmit={handleSubmit}
+          onSubmit={(values) => {setUser(values);}}
         >
-          {() => (
+          {( ) => (
             <Form className={styles.login__form}>
               <div className={styles.flex}>
                 <div className={styles.grid}>
