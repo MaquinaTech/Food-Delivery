@@ -8,7 +8,7 @@ import styles from "../../styles/styles.module.scss";
 
 
 const Restaurant = (props) => {
-  const { restaurant, setRestaurant, categories, dishes, setOrderList, orderList} = props;
+  const { restaurant, setRestaurant, categories, dishes, setOrderList, orderList, owner} = props;
   const [isDisabled, setIsDisabled] = useState(true);
 
   const updateRestaurantData = async (values) => {
@@ -33,15 +33,42 @@ const Restaurant = (props) => {
       updateRestaurantData(values);
     }
   };
-
   return (
     <div className={styles.EditRestaurants__box}>
-      <div className={styles.EditRestaurants__box__title}>
+      <div className={styles.EditRestaurants__box__logo}>
+        {restaurant && restaurant.available ?
+          <img
+            src="/check.png"
+            className={styles.EditRestaurants__box__logo__mini}
+            alt="LogoRestaurnt"
+          />
+          :
+          <img
+            src="/noCheck.png"
+            className={styles.EditRestaurants__box__logo__mini}
+            alt="LogoRestaurnt"
+          />
+        }
+
         <img
           src="/logo.png"
-          className={styles.login__logo}
+          className={styles.EditRestaurants__box__logo__big}
           alt="LogoRestaurnt"
         />
+        {restaurant && restaurant.bikeFriendly ?
+          <img
+            src="/delivery.png"
+            className={styles.EditRestaurants__box__logo__mini}
+            alt="LogoRestaurnt"
+          />
+          :
+          <div
+            className={styles.EditRestaurants__box__logo__mini}
+          />
+        }
+        
+      </div>
+      <div className={styles.EditRestaurants__box__title}>
         <span>{restaurant && restaurant.name}</span>
       </div>
       <div className={styles.EditRestaurants__box__info}>
@@ -60,12 +87,6 @@ const Restaurant = (props) => {
             <Form>
               <div className={styles.EditRestaurants__box__info__form}>
                 <div className={styles.EditRestaurants__box__info__form__left}>
-                {!isDisabled && 
-                  <div className={styles.EditRestaurants__box__info__form__left__item}>
-                    <span>Nombre</span>
-                    <Field type="text" name="name" id="name" disabled={isDisabled} />
-                  </div>
-                }
                   <div className={styles.EditRestaurants__box__info__form__left__item}>
                     <span>Dirección</span>
                     <Field type="text" name="address" id="address" disabled={isDisabled} />
@@ -81,10 +102,16 @@ const Restaurant = (props) => {
                     <Field type="email" name="contactEmail" id="contactEmail" disabled={isDisabled} />
                   </div>
                   {!isDisabled && 
-                  <div className={styles.EditRestaurants__box__info__form__right__item}>
-                    <span>¿Disponible?</span>
-                      <Field type="checkbox" name="available" id="available" onClick={() => {values.available = !values.available}}/>
-                  </div>
+                  <>
+                    <div className={styles.EditRestaurants__box__info__form__left__item}>
+                      <span>Nombre</span>
+                      <Field type="text" name="name" id="name" disabled={isDisabled} />
+                    </div>
+                    <div className={styles.EditRestaurants__box__info__form__right__item}>
+                      <span>¿Disponible?</span>
+                        <Field type="checkbox" name="available" id="available" onClick={() => {values.available = !values.available}}/>
+                    </div>
+                  </>
                   }
                 </div>
 
@@ -94,23 +121,22 @@ const Restaurant = (props) => {
                       <Field type="number" name="minPrice" id="minPrice" disabled={isDisabled} />
                       <Field type="number" name="maxPrice" id="maxPrice" disabled={isDisabled} />
                   </div>
-                  {!isDisabled && 
-                  <div className={styles.EditRestaurants__box__info__form__right__item}>
-                    <span>Ciudad</span>
-                    <Field type="text" name="city" id="city" disabled={isDisabled} />
-                  </div>
-                  }
-
                   <div className={styles.EditRestaurants__box__info__form__right__item}>
                     <span>Categoría</span>
                     <Field type="text" name="category" id="category" disabled={isDisabled} />
                   </div>
 
                   {!isDisabled && 
-                  <div className={styles.EditRestaurants__box__info__form__right__item}>
-                    <span>bikeFriendly</span>
-                    <Field type="checkbox" name="bikeFriendly" id="bikeFriendly" onClick={() => {values.bikeFriendly = !values.bikeFriendly}} />
-                  </div>
+                  <>
+                    <div className={styles.EditRestaurants__box__info__form__right__item}>
+                      <span>Ciudad</span>
+                      <Field type="text" name="city" id="city" disabled={isDisabled} />
+                    </div>
+                    <div className={styles.EditRestaurants__box__info__form__right__item}>
+                      <span>bikeFriendly</span>
+                      <Field type="checkbox" name="bikeFriendly" id="bikeFriendly" onClick={() => {values.bikeFriendly = !values.bikeFriendly}} />
+                    </div>
+                  </>
                   }
 
                 </div>
@@ -126,18 +152,20 @@ const Restaurant = (props) => {
             </Form>
           )}
         </Formik>
-        <div className={styles.EditRestaurants__box__info__buttons}>
-          <button onClick={() => {setIsDisabled(!isDisabled)}} type="button">
-          {isDisabled ? "Editar" : "Cancelar"}
-          </button>
+        {owner &&
+          <div className={styles.EditRestaurants__box__info__buttons}>
+            <button onClick={() => {setIsDisabled(!isDisabled)}} type="button">
+            {isDisabled ? "Editar" : "Cancelar"}
+            </button>
 
-        </div>
+          </div>
+        }
       </div>
 
       <div className={styles.EditRestaurants__box__whiteSpace}/>
       <div className={styles.EditRestaurants__box__dishes}>
         <h3>Menú</h3>
-        <Dishes dishes={dishes} setOrderList={setOrderList} orderList={orderList}/>
+        <Dishes dishes={dishes} setOrderList={setOrderList} orderList={orderList} enabled={restaurant && restaurant.available ? false : true} owner={owner} idR={restaurant && restaurant.id}/>
       </div>
       <ToastContainer />
     </div>

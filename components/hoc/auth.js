@@ -16,10 +16,8 @@ export const useAuth = () => {
           if(authenticated){
             const {data} = await verifyToken(token);
             if (data) {
-              console.log("Token valido");
                 setAuthenticated(true);
             } else {
-              console.log("Token NO valido");
               localStorage.removeItem('token');
             }
           }

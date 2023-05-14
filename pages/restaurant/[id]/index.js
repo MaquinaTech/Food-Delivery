@@ -14,6 +14,7 @@ function EditRestaurants() {
   const [restaurant, setRestaurant] = useState(null);
   const [dishes, setDishes] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [owner, setOwner] = useState(false);
   const router = useRouter();
   const id = router.query.id;
 
@@ -32,6 +33,9 @@ function EditRestaurants() {
           }
           if(restaurantGet.data[2]){
             setCategories(restaurantGet.data[2]);
+          }
+          if(restaurantGet.data[3]){
+            setOwner(restaurantGet.data[3]);
           }
           
         }
@@ -53,7 +57,7 @@ function EditRestaurants() {
             </Link>
           </div>
           <Ratings />
-          <Restaurant orderList={orderList} setOrderList={setOrderList} restaurant={restaurant} setRestaurant={setRestaurant} categories={categories} dishes={dishes}/>
+          <Restaurant orderList={orderList} setOrderList={setOrderList} restaurant={restaurant} setRestaurant={setRestaurant} categories={categories} dishes={dishes} owner={owner}/>
           <Order orderList={orderList} setOrderList={setOrderList} />
         </div>
     );

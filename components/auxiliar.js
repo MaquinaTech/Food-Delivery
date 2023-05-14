@@ -168,8 +168,6 @@ export const getRestaurant = async (token, id) => {
   try {
     const formData = new URLSearchParams();
     formData.append("idR", id);
-    console.log("Id enviado: ");
-    console.log(id);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -279,6 +277,49 @@ export const updateRestaurant = async (token, values) => {
   }
 }
 
+/**
+ * Update dish
+ * @param {string} token auth
+ * @param {object} values dish data
+ * @returns {object} Object with error or data properties
+ */
+export const updateDish = async (token, values) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/dish/update";
+  try {
+    const formData = new URLSearchParams();
+    formData.append("id", values.id);
+    formData.append("name", values.name);
+    formData.append("price", values.price);
+    formData.append("description", values.description);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
 
 /**
  * Get user details

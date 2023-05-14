@@ -37,6 +37,7 @@
   }
 
   &__title {
+    display:flex;
     text-align: center;
     font-size: 32px;
     margin: 0 0 20px;
@@ -485,6 +486,36 @@
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     border-radius: 15px;
 
+    &__logo {
+      display:flex;
+      justify-content: space-around;
+      min-height: max-content;
+      padding-top:15px;
+      padding-bottom:15px;
+      font-weight: bold;
+      font-size: x-large;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1%;
+      &__mini{
+        max-width:50px;
+        max-height:50px;
+        width:50px;
+        img {
+          max-width:50px;
+          max-height:50px;
+        }
+      }
+      &__big{
+        max-width:150px;
+        max-height:150px;
+        img {
+          max-width:150px;
+          max-height:150px;
+        }
+      }
+    }
+
     &__title {
       min-height: max-content;
       padding-top:15px;
@@ -494,11 +525,6 @@
       margin-left: auto;
       margin-right: auto;
       margin-top: 1%;
-
-      img {
-        width:150px;
-        height:150px;
-      }
       span {
         padding-top:10px;
         display: flex;
@@ -576,6 +602,27 @@
         display: grid;
         justify-content: center;
 
+        &__edit{
+          width:100%;
+          display: flex;
+          justify-content: flex-end;
+          &__buttons{
+            padding-bottom:20px;
+            button {
+              width:100px;
+              border:none;
+              background-color: lightgrey;
+              border-radius: 15px;
+              padding-top:5px;
+              padding-bottom:5px;
+              padding-left:10px;
+              padding-right:10px;
+              &:hover {
+                background-color: grey;
+              }
+            }
+          }
+        }
         &__buttons {
           display:flex;
           justify-content: space-evenly;
@@ -596,6 +643,13 @@
             width:100%;
             height:100%;
             object-fit: fill;
+          }
+        }
+        &__info{
+          input {
+            border:none;
+            outline: none;
+            background-color: transparent !important;
           }
         }
       }
