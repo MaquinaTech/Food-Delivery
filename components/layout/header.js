@@ -1,11 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '../hoc/auth';
+import { deleteToken } from '../../components/auxiliar';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 import styles from '../../styles/Header.module.scss';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { logout } = useAuth();
+  const router = useRouter();
+  
+   // Update password
+   const logout = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const { data } = await deleteToken(token);
+      if (data) {
+        toast.success('Sesion cerrada correctamente');
+        localStorage.removeItem('token');
+        router.push('/auth/login');
+      }
+    } catch (error) {
+      toast.error('Ocurrió un error al intentar cerrar sesión');
+    }
+  };
+  
 
   function handleMenuClick() {
     setIsMenuOpen(!isMenuOpen);

@@ -279,8 +279,8 @@
 // ------------- Filter ------------- //
 .searchFilter {
   &__content {
-    width:60%;
-    height:60%;
+    width:80%;
+    height:100%;
     min-width: fit-content;
     min-height: fit-content;
     padding:30px;
@@ -753,6 +753,42 @@
           padding-top: 10px;
         }
         
+      }
+    }
+    &__modal{
+      width:100%;
+      &__close{
+        display:flex;
+        justify-content: flex-end;
+      }
+      h2 {
+        display: flex;
+        justify-content: center;
+        font-size: x-large;
+        padding-top: 10px;
+        padding-bottom: 10px;  
+      }
+      &__text{
+        display:flex;
+        justify-content: center;
+        padding-bottom: 10px;
+      }
+      &__button{
+        display:flex;
+        justify-content: center;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        button {
+          border:none;
+          background-color: lightgrey;
+          color: black;
+          font-weight: bold;
+          cursor:pointer;
+          height:30px;
+          &:hover {
+            background-color: red;
+          }
+        }
       }
     }
   }

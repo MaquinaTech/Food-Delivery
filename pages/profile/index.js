@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import ProfileConfig from '../../components/hoc/ProfileConfig';
 import ChangePassword from '../../components/hoc/ChangePassword';
-import { getUser, updateUser } from '../../components/auxiliar';
+import { getUser, updateUser, updatePassword, deleteAccount } from '../../components/auxiliar';
 import Modal from 'react-modal';
 import styles from '../../styles/styles.module.scss';
 
@@ -19,6 +19,8 @@ function Profile() {
       right: 'auto',
       bottom: 'auto',
       transform: 'translate(-50%, -50%)',
+      padding:"50px",
+      width:"20%",
     },
   };
   
@@ -40,6 +42,7 @@ function Profile() {
     searchUser();
   }, []);
 
+  // Update user data
   useEffect(() => {
     const updateUserData = async () => {
       if (user) {
@@ -57,28 +60,41 @@ function Profile() {
     updateUserData();
   }, [user]);
 
-  const updatePassword = async (values) => {
+  // Update password
+  const changePassword = async (values) => {
     const token = localStorage.getItem('token');
     
     if (!values.password1 || !values.password2) {
       toast.error('Por favor, complete todos los campos');
     } else {
       if(values.password1 === values.password2){
-        values = {...values, id: user.id};
         try {
           const {data} = await updatePassword(token,values);
           if (data) {
-            toast.success('Datos actualizados correctamente');
+            toast.success('Contraseña actualizada correctamente');
           }
         } catch (error) {
-          toast.error('Ocurrió un error al intentar actualizar los datos');
+          toast.error('Ocurrió un error al intentar actualizar su contraseña');
         }
       }
       else{
         toast.error('Las contraseñas no coinciden');
       }
     }
+  };
 
+  const deleteUser = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const {data} = await deleteAccount(token);
+      if (data) {
+        toast.success('Cuenta eliminada correctamente');
+        localStorage.removeItem('token');
+        router.push('/');
+      }
+    } catch (error) {
+      toast.error('Ocurrió un error al intentar eliminar su cuenta');
+    }
   };
 
   return (
@@ -93,7 +109,7 @@ function Profile() {
         <div className={styles.profile__box}>
           <div className={styles.profile__box__forms}>
             <ProfileConfig user={user} setUser={setUser}/>
-            <ChangePassword handleSubmit={updatePassword} />
+            <ChangePassword handleSubmit={changePassword} />
           </div>
           <div className={styles.profile__box__account}>
             <div className={styles.profile__box__account__danger}>
@@ -107,11 +123,20 @@ function Profile() {
                 onRequestClose={() => {setOpenModal(!openModal)}}
                 contentLabel="Eliminar cuenta"
                 style={customStyles}
+                ariaHideApp={false}
               >
-                <h2>¡Cuidado!</h2>
-                <button className={styles.profile__box__modal__button} onClick={() => {setOpenModal(!openModal)}}>close</button>
-                <div>Esta acción es irreversible</div>
-                  <button>Eliminar cuenta</button>
+                <div className={styles.profile__box__modal}>
+                  <div className={styles.profile__box__modal__close}>
+                    <button onClick={() => {setOpenModal(!openModal)}}>cancelar</button>
+                  </div>
+                    <h2>¡Cuidado!</h2>
+                  <div className={styles.profile__box__modal__text}>
+                    Esta acción es irreversible
+                  </div>
+                  <div className={styles.profile__box__modal__button}>
+                    <button onClick={deleteUser}>Eliminar cuenta</button>
+                  </div>
+                </div>
               </Modal>
             </div>
           </div>
