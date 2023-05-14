@@ -522,6 +522,9 @@
           outline: none;
           background-color: transparent !important;
         }
+        span {
+          font-weight: bold;
+        }
         &__left {
           display:grid;
           text-align: center;
@@ -552,15 +555,15 @@
         button {
           width:100px;
           border:none;
-          background-color: transparent;
+          background-color: lightgrey;
+          border-radius: 15px;
           padding-top:5px;
           padding-bottom:5px;
           padding-left:10px;
           padding-right:10px;
 
           &:hover {
-            background-color: lightgrey;
-            border-radius: 15px;
+            background-color: grey;
           }
         }
       }

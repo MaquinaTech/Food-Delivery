@@ -4,7 +4,7 @@ import Restaurant from '../../../components/hoc/Restaurant';
 import Order from '../../../components/hoc/Order';
 import Link from 'next/link';
 import styles from "../../../styles/styles.module.scss";
-import { getRestaurant, getDishes } from '../../../components/auxiliar';
+import { getRestaurant } from '../../../components/auxiliar';
 import { useRouter } from 'next/router';
 
 
@@ -53,7 +53,7 @@ function EditRestaurants() {
             </Link>
           </div>
           <Ratings />
-          <Restaurant orderList={orderList} setOrderList={setOrderList} restaurant={restaurant} categories={categories} dishes={dishes}/>
+          <Restaurant orderList={orderList} setOrderList={setOrderList} restaurant={restaurant} setRestaurant={setRestaurant} categories={categories} dishes={dishes}/>
           <Order orderList={orderList} setOrderList={setOrderList} />
         </div>
     );

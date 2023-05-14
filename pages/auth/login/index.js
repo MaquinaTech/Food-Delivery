@@ -28,8 +28,6 @@ export default function Login() {
         const {data} = await getToken(values.username, values.password);
         if (data) {
           // Make login in React Context
-          console.log("Logeamos");
-          console.log(data);
           auth.login(data);
           router.push("/search");
         } else {
@@ -78,9 +76,6 @@ export default function Login() {
                 className={styles.login__input}
               />
 
-              <a className={styles.login__links} href="#">
-                ¿Olvidaste tu contraseña?
-              </a>
               <br />
               <button className={styles.login__submit} type="submit">
                 Ingresar

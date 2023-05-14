@@ -200,6 +200,85 @@ export const getRestaurant = async (token, id) => {
   }
 }
 
+/**
+ * Get restaurants
+ * @param {string} token auth
+ * @param {object} values restaurant values
+ * @returns {object} Object with error or data properties
+ */
+export const updateRestaurant = async (token, values) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/update";
+  try {
+    const formData = new URLSearchParams();
+    if(values.id){
+      formData.append("id", values.id);
+    }
+    if(values.name){
+      formData.append("name", values.name);
+    }
+    if(values.address){
+      formData.append("address", values.address);
+    }
+    if(values.telephone){
+      formData.append("telephone", values.telephone);
+    }
+    if(values.gardesAverage){
+      formData.append("gardesAverage", values.gardesAverage);
+    }
+    if(values.city){
+      formData.append("city", values.city);
+    }
+    if(values.minPrice){
+      formData.append("minPrice", values.minPrice);
+    }
+    if(values.maxPrice){
+      formData.append("maxPrice", values.maxPrice);
+    }
+    if(values.bikeFriendly){
+      formData.append("bikeFriendly", 1);
+    }
+    else{
+      formData.append("bikeFriendly", 0);
+    }
+    if(values.available){
+      formData.append("available", 1);
+    }
+    else{
+      formData.append("available", 0);
+    }
+    if(values.contactEmail){
+      formData.append("contactEmail", values.contactEmail);
+    }
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
 
 /**
  * Get user details
