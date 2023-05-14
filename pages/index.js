@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Login from './auth/login';
-import Search from './search';
-import ListRestaurants from './list-restaurants';
-import styles from "../styles/styles.module.scss";
+import { useRouter } from 'next/router';
 
 function Home() {
+  const router = new useRouter();
+
+  useEffect(() => {
+    router.push("/auth/login");
+  }, []);
+
   return (
     <div>
-      <Login/>
+      
     </div>
   );
 }

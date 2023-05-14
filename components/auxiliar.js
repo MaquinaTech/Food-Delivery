@@ -52,15 +52,13 @@ export const verifyToken = async (token) => {
   const url = "http://127.0.0.1:8080/FoodDelivery/rest/auth/verify";
 
   try {
-    const formData = new URLSearchParams();
-    formData.append("token", token);
 
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
       },
-      body: formData.toString(),
     });
 
     const data = await response.json();

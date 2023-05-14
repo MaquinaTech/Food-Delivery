@@ -2,11 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {verifyToken} from '../auxiliar';
 
 export const setToken = (token) => {
-  console.log("Seteamos token");
-  console.log(token);
   localStorage.setItem('token', token);
-  const token2 = localStorage.getItem('token');
-  console.log(token2);
 };
 
 export const useAuth = () => {
