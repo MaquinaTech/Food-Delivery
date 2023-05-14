@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Dishes from './Dishes';
 import { Formik, Form, Field } from 'formik';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { updateRestaurant } from '../auxiliar';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from "../../styles/styles.module.scss";
@@ -167,7 +167,6 @@ const Restaurant = (props) => {
         <h3>Menú</h3>
         <Dishes dishes={dishes} setOrderList={setOrderList} orderList={orderList} enabled={restaurant && restaurant.available ? false : true} owner={owner} idR={restaurant && restaurant.id}/>
       </div>
-      <ToastContainer />
     </div>
   );
 };

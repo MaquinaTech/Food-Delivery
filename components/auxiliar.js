@@ -482,3 +482,43 @@ export const deleteAccount = async (token) => {
     };
   }
 }
+
+/**
+ * Send order
+ * @param {string} token auth
+ * @param {object} values user data
+ * @returns {object} Object with error or data properties
+ */
+export const sendOrder = async (token, values) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/orders";
+  try {
+    const formData = new URLSearchParams();
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}

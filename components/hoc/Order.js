@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input, InputGroup, InputGroupText } from 'reactstrap';
+import { sendOrder } from '../auxiliar';
+import { toast } from 'react-toastify';
 import styles from "../../styles/styles.module.scss";
 
 const Order = (props) => {
@@ -15,6 +17,19 @@ const Order = (props) => {
     let totalPrice = orderList.reduce((acc, cur) => acc + cur.price, 0);
     setTotal(totalPrice);
   }, [orderList]);
+
+  const makeOrder = async () => {
+    if (orderList) {
+      try {
+        const { data } = await sendOrder(localStorage.getItem('token'), orderList);
+        if (data) {
+          toast.success('Datos actualizados correctamente');
+        }
+      } catch (error) {
+        toast.error('Ocurrió un error al intentar actualizar los datos');
+      }
+    }
+  };
   
 
   return (
@@ -51,7 +66,7 @@ const Order = (props) => {
               Total a pagar
             </InputGroupText>
             <Input value={total + " €"}/>
-            <Button color="warning">
+            <Button color="warning" onClick={makeOrder}>
               Pagar
             </Button>
           </InputGroup>
