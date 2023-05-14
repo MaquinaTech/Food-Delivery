@@ -7,7 +7,7 @@ import styles from "../../styles/styles.module.scss";
 const Dishes = (props) => {
   const { dishes, setOrderList, orderList, enabled, owner } = props;
   const [isDisabled, setIsDisabled] = useState(true);
-  const [editedDishes, setEditedDishes] = useState(dishes);
+  const [editedDishes, setEditedDishes] = useState(dishes ? dishes : []);
 
   const addDish = (index) => {
     if (dishes[index]) {
@@ -39,11 +39,11 @@ const Dishes = (props) => {
     <div className={styles.EditRestaurants__box__dishes__dish}>
       <div className={styles.EditRestaurants__box__dishes__dish__edit}>
         <div className={styles.EditRestaurants__box__dishes__dish__edit__buttons}>
-          {owner && (
+          {owner && 
             <button onClick={() => setIsDisabled(!isDisabled)} type="button">
               {isDisabled ? "Editar" : "Cancelar"}
             </button>
-          )}
+          }
         </div>
       </div>
       <ul>
@@ -67,19 +67,19 @@ const Dishes = (props) => {
             <div className={styles.EditRestaurants__box__dishes__dish__info}>
               <input
                 name="name"
-                value={editedDishes[index].name}
+                value={editedDishes[index] ? editedDishes[index].name : dish.name}
                 disabled={isDisabled}
                 onChange={(event) => handleInputChange(index, event)}
               />
               <input
                 name="price"
-                value={editedDishes[index].price}
+                value={editedDishes[index] ? editedDishes[index].price : dish.price}
                 disabled={isDisabled}
                 onChange={(event) => handleInputChange(index, event)}
               />
               <input
                 name="description"
-                value={editedDishes[index].description}
+                value={editedDishes[index] ? editedDishes[index].description : dish.description}
                 disabled={isDisabled}
                 onChange={(event) => handleInputChange(index, event)}
               />
