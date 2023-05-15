@@ -36,8 +36,6 @@ function ListRestaurants() {
       );
     });
     setFilteredData(filteredRestaurants);
-    console.log(restaurants);
-    console.log(filteredRestaurants);
   }, [filters, restaurants]);
   
     return (

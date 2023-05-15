@@ -2,14 +2,27 @@ import React, {useState, useEffect} from 'react';
 import Dishes from './Dishes';
 import { Formik, Form, Field } from 'formik';
 import { toast } from 'react-toastify';
-import { updateRestaurant } from '../auxiliar';
+import { updateRestaurant, deleteRestaurant } from '../auxiliar';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
 import styles from "../../styles/styles.module.scss";
 
 
 const Restaurant = (props) => {
   const { restaurant, setRestaurant, categories, dishes, setOrderList, orderList, owner} = props;
   const [isDisabled, setIsDisabled] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      transform: 'translate(-50%, -50%)',
+      padding:"50px",
+      width:"20%",
+    },
+  };
 
   const updateRestaurantData = async (values) => {
     if (restaurant) {
@@ -31,6 +44,22 @@ const Restaurant = (props) => {
       toast.success('Restaurante actualizado', { autoClose: 3500 });
       setRestaurant(values);
       updateRestaurantData(values);
+    }
+  };
+
+  const deleteRest = async () => {
+    const token = localStorage.getItem('token');
+    if(restaurant.id){
+      try {
+        const {data} = await deleteRestaurant(token,restaurant.id);
+        if (data) {
+          toast.success('Restaurante eliminado correctamente');
+          localStorage.removeItem('token');
+          router.push('/');
+        }
+      } catch (error) {
+        toast.error('Ocurrió un error al intentar eliminar su cuenta');
+      }
     }
   };
   return (
@@ -157,6 +186,27 @@ const Restaurant = (props) => {
             <button onClick={() => {setIsDisabled(!isDisabled)}} type="button">
             {isDisabled ? "Editar" : "Cancelar"}
             </button>
+              <button style={{backgroundColor:"red", width:"fit-content"}} onClick={() => {setOpenModal(!openModal)}} >Eliminar restaurante</button>
+              <Modal
+                isOpen={openModal}
+                onRequestClose={() => {setOpenModal(!openModal)}}
+                contentLabel="Eliminar cuenta"
+                style={customStyles}
+                ariaHideApp={false}
+              >
+                <div className={styles.profile__box__modal}>
+                  <div className={styles.profile__box__modal__close}>
+                    <button onClick={() => {setOpenModal(!openModal)}}>cancelar</button>
+                  </div>
+                    <h2>¡Cuidado!</h2>
+                  <div className={styles.profile__box__modal__text}>
+                    Esta acción es irreversible
+                  </div>
+                  <div className={styles.profile__box__modal__button}>
+                    <button onClick={deleteRest}>Eliminar restaurante</button>
+                  </div>
+                </div>
+              </Modal>
 
           </div>
         }

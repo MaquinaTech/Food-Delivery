@@ -10,6 +10,7 @@ const List = ({ restaurants, name }) => {
   //Def. item list
   const renderItem = (index) => {
     const restaurant = restaurants[index];
+    console.log(restaurant);
     return (
       <ListGroupItem key={restaurant.id} onClick={() => {router.push(`/restaurant/${restaurant.id}`)}} className={styles.reactList__item}>
 
@@ -18,18 +19,18 @@ const List = ({ restaurants, name }) => {
             {restaurant.name}
           </div>
           <div className={styles.reactList__item__info__rating}>
-            Valoración: {restaurant.rating}
+            Valoración: {restaurant.gradesAverage}
           </div>
         </div>
         <div className={styles.reactList__item__services}>
           <div className={styles.reactList__item__services__delivery}>
-            Entrega a domicilio: {restaurant.delivery ? 'Sí' : 'No'}
+            Entrega a domicilio: {restaurant.bikeFriendly ? 'Sí' : 'No'}
           </div>
           <div className={styles.reactList__item__services__time}>
-            Tiempo: {restaurant.time}
+            Email: {restaurant.contactEmail}
           </div>
           <div className={styles.reactList__item__services__price}>
-            Precio: {restaurant.price}
+            Precio: {restaurant.minPrice} - {restaurant.maxPrice} €
           </div>
         </div>
       </ListGroupItem>
