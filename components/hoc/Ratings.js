@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Input, Button } from 'reactstrap';
 import RatingStar from './RatingStar';
 import { toast } from 'react-toastify';
-import { getReviews, addReviews } from '../auxiliar';
+import { getReviews, addReviews, deleteReviews } from '../auxiliar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "../../styles/styles.module.scss";
 
@@ -11,24 +11,40 @@ const Ratings = (idR) => {
   const [ratingList, setRatingList] = useState([]);
   const [ratingStar, setRatingStar] = useState(0);
   const [ratingAVG, setRatingAVG] = useState(0);
-  const deleteComment = (index) => {
-    const newList = [...ratingList];
-    newList.splice(index, 1);
-    setRatingList(newList);
+  const deleteComment = async (index) => {
+    const token = localStorage.getItem('token');
+    if(idR){
+      try {
+        const {data} = await deleteReviews(token, idR.idR);
+        if (data) {
+          toast.success('Review eliminada correctamente');
+          const newList = [...ratingList];
+          newList.splice(index, 1);
+          setRatingList(newList);
+        }
+      } catch (error) {
+        toast.error('Ocurrió un error al añadir tu review');
+      }
+    }
+
   };
 
   const sendRating = async () => {
     if (ratingStar && ratingComment) {
-      setRatingList([...ratingList, { comment: ratingComment, stars: ratingStar }]);
+      
       const token = localStorage.getItem('token');
       if(ratingComment && ratingStar && idR){
         try {
           const {data} = await addReviews(token, idR.idR, ratingComment, ratingStar);
           if (data) {
             toast.success('Review añadida correctamente');
+            setRatingList([...ratingList, { comment: ratingComment, stars: ratingStar }]);
+          }
+          else{
+            toast.error('Sólo podrás añadir una review por restaurante');
           }
         } catch (error) {
-          toast.error('Ocurrió un error al intentar añadir la review');
+          toast.error('Ocurrió un error al añadir tu review');
         }
       }
     }

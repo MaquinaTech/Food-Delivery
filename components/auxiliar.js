@@ -702,3 +702,44 @@ export const addReviews = async (token, idR, comment, stars) => {
     };
   }
 }
+
+/**
+ * Delete review
+ * @param {string} token auth
+ * @param {integer} idR idRestaurant
+ * @returns {object} Object with error or data properties
+ */
+export const deleteReviews = async (token, idR) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/reviews";
+  const formData = new URLSearchParams();
+  formData.append("idR", idR);
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
