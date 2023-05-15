@@ -49,7 +49,8 @@ const Ratings = (idR) => {
         try {
           const {data} = await getReviews(token, idR.idR);
           if (data) {
-            setRatingList(data);
+            setRatingList();
+            setRatingList([{ comment: data[0].review, stars: data[0].grade }]);
           }
         } catch (error) {
           toast.error('Ocurrió un error al intentar actualizar las reviews');
