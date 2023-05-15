@@ -29,7 +29,7 @@ export default function Login() {
         if (data) {
           // Make login in React Context
           auth.login(data);
-          router.push("/search");
+          router.push("/list-restaurants");
         } else {
           toast.error('Ocurrió un error al intentar iniciar sesión');
         }

@@ -1,27 +1,40 @@
 import React, {useState, useEffect} from 'react';
 import { Input, Button } from 'reactstrap';
 import RatingStar from './RatingStar';
+import { toast } from 'react-toastify';
+import { getReviews, addReviews } from '../auxiliar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "../../styles/styles.module.scss";
 
-const Ratings = () => {
+const Ratings = (idR) => {
   const [ratingComment, setRatingComment] = useState('');
   const [ratingList, setRatingList] = useState([]);
   const [ratingStar, setRatingStar] = useState(0);
   const [ratingAVG, setRatingAVG] = useState(0);
-
   const deleteComment = (index) => {
     const newList = [...ratingList];
     newList.splice(index, 1);
     setRatingList(newList);
   };
 
-  const sendRating = () => {
+  const sendRating = async () => {
     if (ratingStar && ratingComment) {
       setRatingList([...ratingList, { comment: ratingComment, stars: ratingStar }]);
+      const token = localStorage.getItem('token');
+      if(ratingComment && ratingStar && idR){
+        try {
+          const {data} = await addReviews(token, idR.idR, ratingComment, ratingStar);
+          if (data) {
+            toast.success('Review añadida correctamente');
+          }
+        } catch (error) {
+          toast.error('Ocurrió un error al intentar añadir la review');
+        }
+      }
     }
     setRatingComment('');
   };
+
 
   useEffect(() => {
     const totalStars = ratingList.reduce((acc, cur) => acc + cur.stars, 0);
@@ -29,6 +42,22 @@ const Ratings = () => {
     setRatingAVG(newRatingAVG);
   }, [ratingList]);
 
+  useEffect(() => {
+    const searchReviews = async () => {
+      const token = localStorage.getItem('token');
+      if(idR){
+        try {
+          const {data} = await getReviews(token, idR.idR);
+          if (data) {
+            setRatingList(data);
+          }
+        } catch (error) {
+          toast.error('Ocurrió un error al intentar actualizar las reviews');
+        }
+      }
+    };
+    searchReviews();
+  }, [idR]);
   return (
     <div className={styles.EditRestaurants__ratings}>
       <div className={styles.EditRestaurants__ratings__title}>

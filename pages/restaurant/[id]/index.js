@@ -37,7 +37,6 @@ function EditRestaurants() {
           if(restaurantGet.data[3]){
             setOwner(restaurantGet.data[3]);
           }
-          
         }
         else{
           console.log(restaurantGet.error);
@@ -56,7 +55,7 @@ function EditRestaurants() {
               <img src="/back.svg" alt="back"/>  Ir a búsqueda
             </Link>
           </div>
-          <Ratings />
+          <Ratings idR={router.query.id} />
           <Restaurant orderList={orderList} setOrderList={setOrderList} restaurant={restaurant} setRestaurant={setRestaurant} categories={categories} dishes={dishes} owner={owner}/>
           <Order orderList={orderList} setOrderList={setOrderList} />
         </div>

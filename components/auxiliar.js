@@ -590,7 +590,6 @@ export const deleteAccount = async (token) => {
 export const sendOrder = async (token, values) => {
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/orders";
   try {
-    const formData = new URLSearchParams();
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -598,6 +597,89 @@ export const sendOrder = async (token, values) => {
         Authorization: "Bearer " + token,
       },
       body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+/**
+ * Get reviews
+ * @param {string} token auth
+ * @returns {object} Object with error or data properties
+ */
+export const getReviews = async (token,idR) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/reviews";
+  const formData = new URLSearchParams();
+  formData.append("idR", idR);
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+/**
+ * Add review
+ * @param {string} token auth
+ * @param {object} values review data
+ * @returns {object} Object with error or data properties
+ */
+export const addReviews = async (token, idR, comment, stars) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/reviews/add";
+  const formData = new URLSearchParams();
+  formData.append("idR", idR);
+  formData.append("comment", comment);
+  formData.append("stars", stars);
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
     });
     const data = await response.json();
     if (data.error) {

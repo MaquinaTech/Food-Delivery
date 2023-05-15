@@ -34,18 +34,13 @@ function Header() {
       <nav className={`${styles.header__nav} ${isMenuOpen ? styles.header__nav__open : ''}`}>
         <ul className={styles.header__nav__ul}>
           <li className={styles.header__nav__ul__li}>
-            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/">
-              Iniciar sesión
-            </Link>
+              <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/search">
+                Inicio
+              </Link>
           </li>
           <li className={styles.header__nav__ul__li}>
             <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/profile">
               Tu Perfil
-            </Link>
-          </li>
-          <li className={styles.header__nav__ul__li}>
-            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/abaut">
-              Contacto
             </Link>
           </li>
           <li className={styles.header__nav__ul__li}>
