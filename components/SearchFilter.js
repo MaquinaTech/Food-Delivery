@@ -5,9 +5,16 @@ import styles from '../styles/styles.module.scss';
 const SearchFilter = (props ) => {
   const {title} = props;
 
-  const filter = () => {
-    console.log('filter');
-  }
+  const handleFilter = (event) => {
+    const { name, address, bikeFriendly, available } = event.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: name,
+      [address]: address,
+      [bikeFriendly]: bikeFriendly,
+      [available]: available,
+    }));
+  };
 
   return (
     <div className={styles.searchFilter__content}>
@@ -17,24 +24,22 @@ const SearchFilter = (props ) => {
       <div className={styles.searchFilter__content__list}>
       <Formik
         initialValues={{
-            restaurantName: '',
-            category: [],
+            name: '',
             address: '',
-            city: '',
-            country: '',
-            bikeFriendly: false
+            bikeFriendly: false,
+            available: 'all'
         }}
-        onSubmit={(values, actions) => {
-            // submit code goes here
+        onSubmit={(values) => {
+          handleFilter(values)
         }}
       >
         {({values, handleChange}) => (
             <Form>
             <div className={styles.searchFilter__content__list__item}>
-                <label htmlFor="restaurantName">Nombre del restaurante</label>
+                <label htmlFor="name">Nombre del restaurante</label>
                 <Field
-                id="restaurantName"
-                name="restaurantName"
+                id="name"
+                name="name"
                 placeholder="Nombre"
                 type="text"
                 className="form-control"
@@ -51,15 +56,51 @@ const SearchFilter = (props ) => {
                 className="form-control"
                 />
             </div>
+            <div className={styles.flex}>
+              <div>
+                <label>
+                  <Field
+                      name="available"
+                      id="all"
+                      type="radio"
+                      value="all"
+                  />
+                  Todos
+                </label>
+              </div>
+              
+              <div>
+                <label>
+                  <Field
+                      name="available"
+                      id="yesAvailable"
+                      type="radio"
+                      value="yesAvailable"
+                  />
+                  Disponibles
+                </label>
+              </div>
+              <div>
+                <label>
+                  <Field
+                      name="noAvailable"
+                      id="available"
+                      type="radio"
+                      value="noAvailable"
+                  />
+                  No disponibles
+                </label>
+              </div>
+            </div>
 
-            <div className="form-check">
+
+            <div>
                 <Field
                 id="bikeFriendly"
                 name="bikeFriendly"
                 type="checkbox"
-                className="form-check-input"
                 />
-                <label htmlFor="bikeFriendly" className="form-check-label">
+                <label htmlFor="bikeFriendly">
                 ¿Bike Friendly?
                 </label>
             </div>

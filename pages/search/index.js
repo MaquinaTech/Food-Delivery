@@ -30,9 +30,9 @@ function Search() {
               </div>
             </div>
             <div className={styles.search__categories}>
-              <p className={styles.search__categories__title}><b>Nuestras categorías</b></p>
+              <p className={styles.search__categories__title}><b></b></p>
               <div className={styles.commerceSlide}>
-                <Slide images={images}/>
+                {/*<Slide images={images}/>*/}
               </div>
           </div>
         </div>

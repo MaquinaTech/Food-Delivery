@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { registerUser } from '../../../components/auxiliar';
 import { toast } from 'react-toastify';
 import { Formik, Form, Field } from 'formik';
 import styles from "../../../styles/styles.module.scss";
@@ -10,11 +11,19 @@ function Register() {
     const router = new useRouter();
 
   
-  const handleSubmit = (values) => {
-    if (!values.username || !values.password || !values.email || !values.phone) {
+  const handleSubmit = async (values) => {
+    if (!values.name ||!values.surname || !values.password || !values.email || !values.telephone) {
       console.log("error")
       toast.error('Por favor, complete todos los campos', setTimeout(3000));
     } else {
+      try {
+        const { data } = await registerUser(localStorage.getItem('token'), values);
+        if (data) {
+          toast.success('Datos actualizados correctamente');
+        }
+      } catch (error) {
+        toast.error('Ocurrió un error, la contraseña debe tener al menos 8 caracteres, 1 mayuscula, 1 minuscula y 1 numero');
+      }
       router.push('/login');
     }
   }
@@ -28,17 +37,27 @@ function Register() {
         >
           {() => (
               <Form className={styles.login__form}>
-              <label className={styles.login__label} htmlFor="username">
+              <label className={styles.login__label} htmlFor="name">
                   Nombre de usuario
               </label>
               <Field
                   type="text"
-                  id="username"
-                  name="username"
+                  id="name"
+                  name="name"
                   placeholder="Ingrese su nombre de usuario"
                   className={styles.login__input}
               />
-              <label className={styles.login__label} htmlFor="username">
+              <label className={styles.login__label} htmlFor="surname">
+                  Apellido
+              </label>
+              <Field
+                  type="text"
+                  id="surname"
+                  name="surname"
+                  placeholder="Ingrese su apellido"
+                  className={styles.login__input}
+              />
+              <label className={styles.login__label} htmlFor="email">
                   Email
               </label>
               <Field
@@ -48,13 +67,13 @@ function Register() {
                   placeholder="Ingrese su email"
                   className={styles.login__input}
               />
-              <label className={styles.login__label} htmlFor="username">
+              <label className={styles.login__label} htmlFor="telephone">
                 Telefono
               </label>
               <Field
                   type="phone"
-                  id="phone"
-                  name="phone"
+                  id="telephone"
+                  name="telephone"
                   placeholder="Ingrese su teléfono"
                   className={styles.login__input}
               />

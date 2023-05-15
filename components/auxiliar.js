@@ -121,6 +121,52 @@ export const deleteToken = async (token) => {
   }
 };
 
+/**
+ * Get restaurants
+ * @param {string} token auth
+ * @param {object} values restaurant values
+ * @returns {object} Object with error or data properties
+ */
+export const registerUser = async (token, values) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/auth/register";
+  try {
+    const formData = new URLSearchParams();
+    formData.append("name", values.name);
+    formData.append("surname", values.surname);
+    formData.append("email", values.email);
+    formData.append("telephone", values.telephone);
+    formData.append("password", values.password);
+    
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
 
 /**
  * Get restaurants
