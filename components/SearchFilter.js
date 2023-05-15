@@ -2,18 +2,20 @@ import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import styles from '../styles/styles.module.scss';
 
-const SearchFilter = (props ) => {
-  const {title} = props;
+const SearchFilter = (props) => {
+  const {title, setFilters, filters} = props;
 
   const handleFilter = (event) => {
-    const { name, address, bikeFriendly, available } = event.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: name,
-      [address]: address,
-      [bikeFriendly]: bikeFriendly,
-      [available]: available,
+    console.log("event", event);
+    const { name, address, bikeFriendly, available } = event;
+    setFilters((filters) => ({
+      ...filters,
+      name: name ? name : "",
+      address: address ? address : "",
+      bikeFriendly: bikeFriendly ? bikeFriendly : "",
+      available: available ? (available !== "all" ? 1 : "all") : 0,
     }));
+    console.log("filters", filters);
   };
 
   return (
@@ -42,7 +44,6 @@ const SearchFilter = (props ) => {
                 name="name"
                 placeholder="Nombre"
                 type="text"
-                className="form-control"
                 />
             </div>
 
@@ -53,7 +54,6 @@ const SearchFilter = (props ) => {
                 name="address"
                 placeholder="Dirección"
                 type="text"
-                className="form-control"
                 />
             </div>
             <div className={styles.flex}>
@@ -75,7 +75,7 @@ const SearchFilter = (props ) => {
                       name="available"
                       id="yesAvailable"
                       type="radio"
-                      value="yesAvailable"
+                      value="1"
                   />
                   Disponibles
                 </label>
@@ -83,10 +83,10 @@ const SearchFilter = (props ) => {
               <div>
                 <label>
                   <Field
-                      name="noAvailable"
-                      id="available"
+                      name="available"
+                      id="noAvailable"
                       type="radio"
-                      value="noAvailable"
+                      value="0"
                   />
                   No disponibles
                 </label>

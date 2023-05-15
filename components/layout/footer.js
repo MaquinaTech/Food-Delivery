@@ -8,18 +8,18 @@ function Footer() {
       <nav className={styles.footer__nav}>
         <ul className={styles.footer__nav__ul}>
           <li className={styles.footer__nav__li}>
-            <Link className={styles.footer__nav__a} href="/">
+            <Link className={styles.footer__nav__a} href="/search">
               Inicio
             </Link>
           </li>
           <li className={styles.footer__nav__li}>
-            <Link className={styles.footer__nav__a} href="/acerca">
+            <Link className={styles.footer__nav__a} href="#">
               Acerca
             </Link>
           </li>
           <li className={styles.footer__nav__li}>
-            <Link className={styles.footer__nav__a} href="/contacto">
-              Contacto
+            <Link className={styles.footer__nav__a} href="#">
+              Contacto: nilopezde@alumnos.unex.es
             </Link>
           </li>
         </ul>

@@ -8,8 +8,8 @@ import { getRestaurants } from '../../components/auxiliar';
 
 function ListRestaurants() {
   const [restaurants, setRestaurants] = useState([]);
-  const [filters, setFilters] = useState({ name: '', rating: "" });
-  const filteredData = _.filter(restaurants, filters);
+  const [filters, setFilters] = useState({ name: ' ', address: ' ', bikeFriendly: false, available: 'all' });
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     const searchRestaurants = async () => {
@@ -24,6 +24,21 @@ function ListRestaurants() {
 
     searchRestaurants();
   }, []);
+
+  useEffect(() => {
+    const filteredRestaurants = _.filter(restaurants, (restaurant) => {
+      const { name, address, bikeFriendly, available } = filters;
+      return (
+        (name === ' ' || restaurant.name.includes(name)) &&
+        (address === ' ' || restaurant.address.includes(address)) &&
+        (!bikeFriendly || restaurant.bikeFriendly) &&
+        (available === 'all' || restaurant.available === available)
+      );
+    });
+    setFilteredData(filteredRestaurants);
+    console.log(restaurants);
+    console.log(filteredRestaurants);
+  }, [filters, restaurants]);
   
     return (
         <div className={styles.ListRestaurants}>
@@ -33,11 +48,11 @@ function ListRestaurants() {
           <div className={styles.ListRestaurants__content}>
             <div className={styles.ListRestaurants__content__filter}>
               <div className={styles.ListRestaurants__content__filter__box}>
-                <SearchFilter setFilters={setFilters} title="Filtro"/>
+                <SearchFilter setFilters={setFilters} filters={filters} title="Filtro"/>
               </div>
             </div>
             <div className={styles.ListRestaurants__content__list}>
-              <List restaurants={restaurants}/>
+              <List restaurants={filteredData}/>
             </div>
           </div>
       </div>
