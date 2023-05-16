@@ -34,19 +34,19 @@ function Seguimiento() {
       <div className={styles.profile}>
 
         {reviews < 3 ?
-          <div className={styles.defensa}>
-            <span>Numero de reviews: {reviews}</span>
-            <span>Numero de restaurantes: {restaurant}</span>          
+          <div style={{color:"white !important"}} className={styles.defensa}>
+            <span style={{color:"white !important"}}>Número de reviews: {reviews}</span>
+            <span style={{color:"white !important"}}>Número de restaurantes: {restaurant}</span>
           </div>
           :
           <div className={styles.defensa3}>
-            <span>Numero de reviews: {reviews}</span>
-            <span>Numero de restaurantes: {restaurant}</span>          
+            <span>Número de reviews: {reviews}</span>
+            <span>Número de restaurantes: {restaurant}</span>
           </div>
         }
 
         <div className={styles.mt}>
-        <Link href="/profile">
+        <Link href="/list-restaurants">
             <img src="/back.svg" alt="back"/>  Volver atrás
           </Link>
         </div>

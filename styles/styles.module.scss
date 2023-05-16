@@ -926,10 +926,16 @@
   min-height:300px;
   font-weight: bold;
   font-size: x-large;
-  color:white;
+  color:white !important;
+  span {
+    color:white !important;
+  }
   background-color:brown;
   justify-items: center;
   align-items: center;
+  margin:100px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
 }
 .defensa3{
   display:grid;
@@ -940,4 +946,7 @@
   background-color:brown;
   justify-items: center;
   align-items: center;
+  margin:100px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
 }
