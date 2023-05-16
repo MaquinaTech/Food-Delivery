@@ -34,7 +34,7 @@ function Header() {
       <nav className={`${styles.header__nav} ${isMenuOpen ? styles.header__nav__open : ''}`}>
         <ul className={styles.header__nav__ul}>
           <li className={styles.header__nav__ul__li}>
-              <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/search">
+              <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/list-restaurants">
                 Inicio
               </Link>
           </li>

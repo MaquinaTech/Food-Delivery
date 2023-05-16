@@ -15,7 +15,6 @@ const SearchFilter = (props) => {
       bikeFriendly: bikeFriendly ? bikeFriendly : "",
       available: available ? (available !== "all" ? 1 : "all") : 0,
     }));
-    console.log("filters", filters);
   };
 
   return (

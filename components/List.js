@@ -10,7 +10,6 @@ const List = ({ restaurants, name }) => {
   //Def. item list
   const renderItem = (index) => {
     const restaurant = restaurants[index];
-    console.log(restaurant);
     return (
       <ListGroupItem key={restaurant.id} onClick={() => {router.push(`/restaurant/${restaurant.id}`)}} className={styles.reactList__item}>
 

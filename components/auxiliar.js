@@ -423,7 +423,6 @@ export const updateRestaurant = async (token, values) => {
  * @returns {object} Object with error or data properties
  */
 export const addRestaurants = async (token, values) => {
-  console.log("hola");
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/add";
   console.log(values);
   try {
