@@ -69,7 +69,7 @@ const Restaurant = (props) => {
           <img
             src="/check.png"
             className={styles.EditRestaurants__box__logo__mini}
-            alt="LogoRestaurnt"
+            alt="disponible"
           />
           :
           <img
@@ -88,7 +88,7 @@ const Restaurant = (props) => {
           <img
             src="/delivery.png"
             className={styles.EditRestaurants__box__logo__mini}
-            alt="LogoRestaurnt"
+            alt="delivery"
           />
           :
           <div

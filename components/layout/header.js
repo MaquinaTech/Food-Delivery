@@ -48,6 +48,11 @@ function Header() {
               Cerrar Sesión
             </div>
           </li>
+          <li className={styles.header__nav__ul__li}>
+            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/seguimientousuario">
+              Seguimiento usuario
+            </Link>
+          </li>
         </ul>
       </nav>
       <button className={styles.header__menuButton} onClick={handleMenuClick}>

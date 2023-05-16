@@ -33,7 +33,7 @@ const Ratings = (idR) => {
     if (ratingStar && ratingComment) {
       
       const token = localStorage.getItem('token');
-      if(ratingComment && ratingStar && idR){
+      if(ratingList && ratingComment && ratingStar && idR){
         try {
           const {data} = await addReviews(token, idR.idR, ratingComment, ratingStar);
           if (data) {
@@ -53,9 +53,11 @@ const Ratings = (idR) => {
 
 
   useEffect(() => {
-    const totalStars = ratingList.reduce((acc, cur) => acc + cur.stars, 0);
-    const newRatingAVG = totalStars / (ratingList.length || 1);
-    setRatingAVG(newRatingAVG);
+    if(ratingList && ratingList.length > 0){
+      const totalStars = ratingList.reduce((acc, cur) => acc + cur.stars, 0);
+      const newRatingAVG = totalStars / (ratingList.length || 1);
+      setRatingAVG(newRatingAVG);
+    }
   }, [ratingList]);
 
   useEffect(() => {
@@ -82,7 +84,7 @@ const Ratings = (idR) => {
       </div>
       <div className={styles.EditRestaurants__ratings__list}>
         <ul>
-          {ratingList.map((comment, index) => (
+          {ratingList && ratingList.map((comment, index) => (
             <li key={index}>
               <div className={styles.EditRestaurants__ratings__list__item}>
                 {comment.comment}

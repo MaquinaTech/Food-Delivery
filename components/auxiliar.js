@@ -297,6 +297,44 @@ export const getRestaurant = async (token, id) => {
 }
 
 /**
+ * Get restaurants
+ * @param {string} token auth
+ * @param {float} id restaurant
+ * @returns {object} Object with error or data properties
+ */
+export const getData = async (token) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/reviews/defensa";
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+/**
  * Delete restaurant
  * @param {string} token auth
  * @param {object} idR restaurant id
