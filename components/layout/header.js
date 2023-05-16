@@ -44,6 +44,11 @@ function Header() {
             </Link>
           </li>
           <li className={styles.header__nav__ul__li}>
+            <Link className={`${styles.header__nav__a} ${styles.header__nav__link}`} href="/addRest">
+              Añadir Restaurante
+            </Link>
+          </li>
+          <li className={styles.header__nav__ul__li}>
             <div className={`${styles.header__nav__a} ${styles.header__nav__link}`} onClick={logout}>
               Cerrar Sesión
             </div>
