@@ -3,16 +3,32 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { Formik, Form, Field } from 'formik';
 import styles from "../../styles/styles.module.scss";
-import { addRestaurants } from '../../components/auxiliar';
+import { addRestaurants, getCategories } from '../../components/auxiliar';
 import { useRouter } from 'next/router';
 
 
 
 function AddRestaurants() {
   const router = useRouter();
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const searchCategories = async () => {
+      try {
+        const {data} = await getCategories(localStorage.getItem('token'));
+        if (data) {
+          setCategories(data);
+        }
+      } catch (error) {
+        toast.error('Ocurrió un error al intentar actualizar las categorías');
+      }
+    };
+    searchCategories();
+  }, []);
 
   const addRestaurantData = async (values) => {
     if(values){
+      console.log(values);
         try {
           const { data } = await addRestaurants(localStorage.getItem('token'), values);
           if (data) {
@@ -95,6 +111,18 @@ function AddRestaurants() {
                     <Field type="text" name="city" id="city" />
                   </div>
                   <div className={styles.EditRestaurants__box__info__form__right__item}>
+                    <span>Categories</span>
+                    <Field as="select" name="category" id="category">
+                      {categories && categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </Field>
+                  </div>
+
+
+                    <div className={styles.EditRestaurants__box__info__form__right__item}>
                     <span>bikeFriendly</span>
                     <Field type="checkbox" name="bikeFriendly" id="bikeFriendly" onClick={() => {values.bikeFriendly = !values.bikeFriendly}} />
                   </div>

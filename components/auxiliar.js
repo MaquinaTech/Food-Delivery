@@ -463,6 +463,9 @@ export const addRestaurants = async (token, values) => {
     if(values.contactEmail){
       formData.append("contactEmail", values.contactEmail);
     }
+    if(values.category){
+      formData.append("category", values.category);
+    }
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -514,6 +517,43 @@ export const updateDish = async (token, values) => {
         Authorization: "Bearer " + token,
       },
       body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+/**
+ * Get categories
+ * @param {string} token auth
+ * @returns {object} Object with error or data properties
+ */
+export const getCategories = async (token) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/categories";
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
     });
     const data = await response.json();
     if (data.error) {

@@ -24,7 +24,7 @@ function Register() {
       } catch (error) {
         toast.error('Ocurrió un error, la contraseña debe tener al menos 8 caracteres, 1 mayuscula, 1 minuscula y 1 numero');
       }
-      router.push('/login');
+      router.push('/auth/login');
     }
   }
 
@@ -102,7 +102,7 @@ function Register() {
           )}
           </Formik>
           <div style={{ display: 'grid' }}>
-            <a className={styles.login__links} href="LoginServlet.do">
+            <a className={styles.login__links} href="/auth/login">
               ¿Ya tienes una cuenta? Inicia sesión
             </a>
           </div>

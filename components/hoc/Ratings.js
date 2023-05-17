@@ -53,9 +53,11 @@ const Ratings = (idR) => {
 
 
   useEffect(() => {
-    const totalStars = ratingList.reduce((acc, cur) => acc + cur.stars, 0);
-    const newRatingAVG = totalStars / (ratingList.length || 1);
-    setRatingAVG(newRatingAVG);
+    if(ratingList){
+      const totalStars = ratingList.reduce((acc, cur) => acc + cur.stars, 0);
+      const newRatingAVG = totalStars / (ratingList.length || 1);
+      setRatingAVG(newRatingAVG);
+    }
   }, [ratingList]);
 
   useEffect(() => {
@@ -65,8 +67,10 @@ const Ratings = (idR) => {
         try {
           const {data} = await getReviews(token, idR.idR);
           if (data) {
-            setRatingList();
             setRatingList([{ comment: data[0].review, stars: data[0].grade }]);
+          }
+          else{
+            setRatingList([]);
           }
         } catch (error) {
           toast.error('Ocurrió un error al intentar actualizar las reviews');
@@ -82,7 +86,7 @@ const Ratings = (idR) => {
       </div>
       <div className={styles.EditRestaurants__ratings__list}>
         <ul>
-          {ratingList.map((comment, index) => (
+          {ratingList && ratingList.map((comment, index) => (
             <li key={index}>
               <div className={styles.EditRestaurants__ratings__list__item}>
                 {comment.comment}
