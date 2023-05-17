@@ -417,7 +417,7 @@ export const updateRestaurant = async (token, values) => {
 }
 
 /**
- * Get restaurants
+ * Add restaurants
  * @param {string} token auth
  * @param {object} values restaurant values
  * @returns {object} Object with error or data properties
@@ -466,6 +466,60 @@ export const addRestaurants = async (token, values) => {
     if(values.category){
       formData.append("category", values.category);
     }
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+/**
+ * Add dish
+ * @param {string} token auth
+ * @param {object} values restaurant values
+ * @returns {object} Object with error or data properties
+ */
+export const addDish = async (token, values,idR) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/dishes/add";
+  console.log(values);
+  try {
+    const formData = new URLSearchParams();
+    if(values.name){
+      formData.append("name", values.name);
+    }
+    if(values.description){
+      formData.append("description", values.description);
+    }
+    if(values.price){
+      formData.append("price", values.price);
+    }
+    if(values.price){
+      formData.append("idR", idR);
+    }
+    
     const response = await fetch(url, {
       method: "POST",
       headers: {
