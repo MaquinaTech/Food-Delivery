@@ -65,15 +65,17 @@ const Ratings = (idR) => {
       const token = localStorage.getItem('token');
       if(idR){
         try {
-          const {data} = await getReviews(token, idR.idR);
+          const {data, error} = await getReviews(token, idR.idR);
           if (data) {
-            setRatingList([{ comment: data[0].review, stars: data[0].grade }]);
+            if(!data.empty){
+              setRatingList([{ comment: data[0].review, stars: data[0].grade }]);
+            }
           }
           else{
             setRatingList([]);
           }
         } catch (error) {
-          toast.error('Ocurrió un error al intentar actualizar las reviews');
+          console.log(error);
         }
       }
     };
