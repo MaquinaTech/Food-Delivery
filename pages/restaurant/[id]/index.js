@@ -56,7 +56,7 @@ function EditRestaurants() {
             </Link>
           </div>
           <Ratings idR={router.query.id} />
-          <Restaurant orderList={orderList} setOrderList={setOrderList} restaurant={restaurant} setRestaurant={setRestaurant} categories={categories} dishes={dishes} owner={owner}/>
+          <Restaurant orderList={orderList} setOrderList={setOrderList} restaurant={restaurant} setRestaurant={setRestaurant} categories={categories} dishes={dishes} setDishes={setDishes} owner={owner}/>
           <Order orderList={orderList} setOrderList={setOrderList} />
         </div>
     );

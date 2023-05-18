@@ -9,7 +9,7 @@ import styles from "../../styles/styles.module.scss";
 
 
 const Restaurant = (props) => {
-  const { restaurant, setRestaurant, categories, dishes, setOrderList, orderList, owner} = props;
+  const { restaurant, setRestaurant, categories, dishes, setDishes, setOrderList, orderList, owner} = props;
   const [isDisabled, setIsDisabled] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const customStyles = {
@@ -215,7 +215,7 @@ const Restaurant = (props) => {
       <div className={styles.EditRestaurants__box__whiteSpace}/>
       <div className={styles.EditRestaurants__box__dishes}>
         <h3>Menú</h3>
-        <Dishes dishes={dishes} setOrderList={setOrderList} orderList={orderList} enabled={restaurant && restaurant.available ? false : true} owner={owner} idR={restaurant && restaurant.id}/>
+        <Dishes dishes={dishes} setDishes={setDishes} setOrderList={setOrderList} orderList={orderList} enabled={restaurant && restaurant.available ? false : true} owner={owner} idR={restaurant && restaurant.id}/>
       </div>
     </div>
   );

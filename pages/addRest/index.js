@@ -50,6 +50,7 @@ function AddRestaurants() {
             </Link>
           </div>
           <div className={styles.AddRestaurants__box}>
+            <h1>Crea tu nuevo restaurante</h1>
           <Formik
           initialValues={{
             "address": "",
@@ -62,7 +63,6 @@ function AddRestaurants() {
             "city": "",
             "bikeFriendly": false,
             "description": "",
-
           }}
           onSubmit={(values) => {
             addRestaurantData(values)
@@ -103,9 +103,9 @@ function AddRestaurants() {
                 <div className={styles.AddRestaurants__box__info__form__right}>
                   <div className={styles.AddRestaurants__box__info__form__right__item}>
                     <span>Rango de precio</span>
-                      <Field type="number" name="minPrice" id="minPrice" />
+                      <Field type="number" name="minPrice" id="minPrice" placeholder="Precio mínimo" />
                       <br/>
-                      <Field type="number" name="maxPrice" id="maxPrice" />
+                      <Field type="number" name="maxPrice" id="maxPrice" placeholder="Precio máximo"/>
                   </div>
 
                   <div className={styles.AddRestaurants__box__info__form__right__item}>

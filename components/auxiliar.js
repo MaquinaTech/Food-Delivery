@@ -502,9 +502,9 @@ export const addRestaurants = async (token, values) => {
  * @param {object} values restaurant values
  * @returns {object} Object with error or data properties
  */
-export const addDish = async (token, values,idR) => {
-  const url ="http://127.0.0.1:8080/FoodDelivery/rest/dishes/add";
-  console.log(values);
+export const addDish = async (token, values, idR) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/dish/add";
+  console.log("Valores: ",values);
   try {
     const formData = new URLSearchParams();
     if(values.name){
@@ -551,6 +551,51 @@ export const addDish = async (token, values,idR) => {
 }
 
 /**
+ * Delete dish
+ * @param {string} token auth
+ * @param {integer} id dish id
+ * @returns {object} Object with error or data properties
+ */
+export const deleteDish = async (token, id) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/dish/delete";
+  try {
+    const formData = new URLSearchParams();
+    if(id){
+      formData.append("id", id);
+    }
+    
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+      body: formData.toString(),
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+
+/**
  * Update dish
  * @param {string} token auth
  * @param {object} values dish data
@@ -558,6 +603,7 @@ export const addDish = async (token, values,idR) => {
  */
 export const updateDish = async (token, values) => {
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/dish/update";
+  console.log("hollllaa");
   try {
     const formData = new URLSearchParams();
     formData.append("id", values.id);

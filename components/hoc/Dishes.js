@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
-import { updateDish, newDish, deleteRestaurant } from '../auxiliar';
+import { updateDish, addDish, deleteDish } from '../auxiliar';
+import { Formik, Form, Field } from 'formik';
 import Modal from 'react-modal';
 import { useRouter } from "next/router";
 
@@ -9,10 +10,10 @@ import styles from "../../styles/styles.module.scss";
 
 const Dishes = (props) => {
   const router = useRouter();
-  const { dishes, setOrderList, orderList, enabled, owner, idR } = props;
+  const { dishes, setDishes, setOrderList, orderList, enabled, owner, idR } = props;
   const [isDisabled, setIsDisabled] = useState(true);
-  const [editedDishes, setEditedDishes] = useState(dishes ? dishes : []);
-  const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [openModalNew, setOpenModalNew] = useState(false);
   const customStyles = {
     content: {
       top: '50%',
@@ -21,7 +22,7 @@ const Dishes = (props) => {
       bottom: 'auto',
       transform: 'translate(-50%, -50%)',
       padding:"50px",
-      width:"20%",
+      width:"50%",
     },
   };
 
@@ -31,32 +32,32 @@ const Dishes = (props) => {
     }
   };
 
-  const handleInputChange = (index, event) => {
-    const { name, value } = event.target;
-    const updatedDishes = [...editedDishes];
-    updatedDishes[index] = { ...updatedDishes[index], [name]: value };
-    setEditedDishes(updatedDishes);
-  };
-
-  const editDish = async (index) => {
-    const dishToUpdate = editedDishes[index];
+  const editDish = async (values) => {
+    console.log(values);
     try {
-      const { data } = await updateDish(localStorage.getItem('token'), dishToUpdate);
+      const { data } = await updateDish(localStorage.getItem('token'), values);
       if (data) {
         toast.success('Datos del plato actualizados correctamente');
+        setOpenModalDelete(false);
       }
     } catch (error) {
       toast.error('Ocurrió un error al intentar actualizar los datos del plato');
     }
   };
 
-  const removeDish = async (index) => {
-    if(idR){
+  const removeDish = async (id) => {
+    if(idR && id){
       try {
-        const { data } = await deleteDish(localStorage.getItem('token'), idR);
+        const { data, error } = await deleteDish(localStorage.getItem('token'), id);
+        console.log(data);
         if (data) {
           toast.success('Plato eliminado');
-          router.push("/list-restaurants");
+          const newDishes = dishes.filter((dish) => dish.id !== id);
+          setDishes(newDishes);
+          setOpenModalDelete(false);
+        }
+        else{
+          toast.error('Ocurrió un error al intentar eliminar el plato');
         }
       } catch (error) {
         toast.error('Ocurrió un error al intentar eliminar el plato');
@@ -67,10 +68,19 @@ const Dishes = (props) => {
 
   const newDish = async (values) => {
     if(idR){
+      if(!values.name || !values.description || !values.price){
+        toast.error('Debe añadir todos los campos');
+        return;
+      }
       try {
         const { data } = await addDish(localStorage.getItem('token'), values,idR);
         if (data) {
           toast.success('Plato añadido correctamente');
+          setOpenModalNew(false);
+          setDishes([...dishes, data]);
+        }
+        else{
+          toast.success('LOL');
         }
       } catch (error) {
         toast.error('Ocurrió un error al intentar añadir el plato');
@@ -84,30 +94,69 @@ const Dishes = (props) => {
         <div className={styles.EditRestaurants__box__dishes__dish__edit__buttons}>
           {owner &&
             <>
-              <button onClick={() => setIsDisabled(!isDisabled)} type="button">
-                {isDisabled ? "Editar" : "Cancelar"}
-              </button>
-
-              <Modal
-              isOpen={openModal}
-              onRequestClose={() => {setOpenModal(!openModal)}}
-              contentLabel="Eliminar cuenta"
-              style={customStyles}
-              ariaHideApp={false}
+            <Modal
+                isOpen={openModalNew}
+                onRequestClose={() => {setOpenModalNew(!openModalNew)}}
+                contentLabel="Crear plato"
+                style={customStyles}
+                ariaHideApp={false}
               >
-              <div className={styles.profile__box__modal}>
-                <div className={styles.profile__box__modal__close}>
-                  <button onClick={() => {setOpenModal(!openModal)}}>cancelar</button>
+                <div className={styles.profile__box__modal}>
+                  <div className={styles.profile__box__modal__close}>
+                    <button onClick={() => {setOpenModalNew(!openModalNew)}}>cancelar</button>
+                  </div>
+                    <h2>Añadir un nuevo plato</h2>
+                  <div className={styles.profile__box__modal__text}>
+                    Complete todos los campos, porfavor
+                  </div>
+                  <div className={styles.profile__box__modal__form}>
+                  <Formik
+                    initialValues={{
+                      "name": "",
+                      "description": "",
+                      "price": 0,
+                    }}
+                    onSubmit={(values) => {
+                      newDish(values)
+                    }}
+                  >
+                    {() => (
+                      <Form>
+                        <div className={styles.profile__box__modal__form__item}>
+                          <span>Nombre</span>
+                          <Field type="text" name="name" id="name" />
+                        </div>
+
+                        <div className={styles.profile__box__modal__form__item}>
+                          <span>Descripción</span>
+                          <Field as="textarea" name="description" id="description" />
+                        </div>
+
+                        <div className={styles.profile__box__modal__form__item}>
+                          <span>Precio €</span>
+                          <Field type="number" name="price" id="price" />
+                        </div>
+                          
+                        <div className={styles.profile__box__modal__button}>
+                          <button type="submit">Crear Plato</button>
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
+                  </div>
+                  
                 </div>
-                  <h2>¡Cuidado!</h2>
-                <div className={styles.profile__box__modal__text}>
-                  Esta acción es irreversible
-                </div>
-                <div className={styles.profile__box__modal__button}>
-                  <button onClick={() => {}}>Eliminar Plato</button>
-                </div>
-              </div>
               </Modal>
+              <div className={styles.profile__box__modal__button}>
+                <Button color="warning" size="md" disabled={enabled} onClick={() => setOpenModalNew(!openModalNew)}>
+                Crear
+                </Button>
+              </div>
+              <div className={styles.profile__box__modal__button__edit}>
+                <Button color="info" size="md" disabled={enabled} onClick={() => setIsDisabled(!isDisabled)}>
+                  {isDisabled ? "Editar" : "Cancelar"}
+                </Button>
+              </div>
             </> 
           }
         </div>
@@ -116,39 +165,83 @@ const Dishes = (props) => {
         {dishes.map((dish, index) => (
           <li key={index}>
             <div className={styles.EditRestaurants__box__dishes__dish__img}>
-              <img src={"/" + dish.img} alt="dish" onClick={() => sendDish(index)} />
+              <img src={dish.img ? ("/" + dish.img) : "/logo.png"} alt="dish" onClick={() => sendDish(index)} />
             </div>
             <div className={styles.EditRestaurants__box__dishes__dish__buttons}>
-              <Button color="success" size="md" disabled={enabled} onClick={() => sendDish(index)}>
-                Añadir
-              </Button>
+              <Modal
+                isOpen={openModalDelete}
+                onRequestClose={() => {setOpenModalDelete(!openModalDelete)}}
+                contentLabel="Eliminar plato"
+                style={customStyles}
+                ariaHideApp={false}
+              >
+                <div className={styles.profile__box__modal}>
+                  <div className={styles.profile__box__modal__close}>
+                    <button onClick={() => {setOpenModalDelete(!openModalDelete)}}>cancelar</button>
+                  </div>
+                    <h2>¡Cuidado!</h2>
+                  <div className={styles.profile__box__modal__text}>
+                    Esta acción es irreversible
+                  </div>
+                  <div className={styles.profile__box__modal__button}>
+                    <button onClick={() => {}}>Eliminar Plato</button>
+                  </div>
+                </div>
+              </Modal>
               {!isDisabled && (
               <div className={styles.EditRestaurants__box__dishes__dish__buttons}>
-                <button onClick={() => editDish(index)} type="button">
-                  Guardar
-                </button>
+                <Button color="danger" size="md" disabled={enabled} onClick={() => removeDish(dish.id)}>
+                  Eliminar
+                </Button>
               </div>
-            )}
+              )}
+              <Button color="success" size="md" disabled={enabled} onClick={() => sendDish(index)}>
+                Pedir
+              </Button>
+              {!isDisabled && (
+                <div className={styles.EditRestaurants__box__dishes__dish__buttons}>
+                  <Button color="warning" size="md" disabled={enabled} onClick={() => editDish(index)}>
+                    Editar
+                  </Button>
+                </div>
+              )}
+
             </div>
             <div className={styles.EditRestaurants__box__dishes__dish__info}>
-              <input
-                name="name"
-                value={editedDishes[index] ? editedDishes[index].name : dish.name}
-                disabled={isDisabled}
-                onChange={(event) => handleInputChange(index, event)}
-              />
-              <input
-                name="price"
-                value={editedDishes[index] ? editedDishes[index].price : dish.price}
-                disabled={isDisabled}
-                onChange={(event) => handleInputChange(index, event)}
-              />
-              <input
-                name="description"
-                value={editedDishes[index] ? editedDishes[index].description : dish.description}
-                disabled={isDisabled}
-                onChange={(event) => handleInputChange(index, event)}
-              />
+              <Formik
+                initialValues={{
+                  "name": dish.name ? dish.name : "",
+                  "description": dish.description ? dish.description : "",
+                  "price": dish.price ? dish.price : 0,
+                }}
+                onSubmit={(values) => {
+                  editDish(values)
+                }}
+              >
+                {() => (
+                  <Form>
+                    <div className={styles.EditRestaurants__box__dishes__dish__info__item}>
+                      <label>
+                        Nombre
+                      </label>
+                      <Field type="text" name="name" id="name" disabled={isDisabled} />
+                    </div>
+                    <div className={styles.EditRestaurants__box__dishes__dish__info__item}>
+                      <label>
+                        Precio
+                      </label>
+                      <Field type="number" name="price" id="price" disabled={isDisabled} />
+                    </div>
+                    <div className={styles.EditRestaurants__box__dishes__dish__info__item}>
+                      <label>
+                        Descripción
+                      </label>
+                      <Field as="textarea" name="description" id="description" />
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+              
             </div>
             
           </li>
