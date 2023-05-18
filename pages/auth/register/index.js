@@ -8,23 +8,25 @@ import styles from "../../../styles/styles.module.scss";
 
 //Register component
 function Register() {
-    const router = new useRouter();
-
+  const router = new useRouter();
   
   const handleSubmit = async (values) => {
     if (!values.name ||!values.surname || !values.password || !values.email || !values.telephone) {
-      console.log("error")
       toast.error('Por favor, complete todos los campos', setTimeout(3000));
     } else {
       try {
-        const { data } = await registerUser(localStorage.getItem('token'), values);
+        const { data, error } = await registerUser(localStorage.getItem('token'), values);
         if (data) {
-          toast.success('Datos actualizados correctamente');
+          toast.success('Cuenta creada correctamente');
+          router.push('/auth/login');
+        }
+        if(error){
+          toast.error('Ocurrió un error: '+error.message, setTimeout(3000));
         }
       } catch (error) {
-        toast.error('Ocurrió un error, la contraseña debe tener al menos 8 caracteres, 1 mayuscula, 1 minuscula y 1 numero');
+        toast.error('Ocurrió un error, inesperado');
       }
-      router.push('/auth/login');
+      
     }
   }
 

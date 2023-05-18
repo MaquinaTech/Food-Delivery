@@ -1,15 +1,29 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
-import { updateDish, newDish } from '../auxiliar';
+import { updateDish, newDish, deleteRestaurant } from '../auxiliar';
 import Modal from 'react-modal';
+import { useRouter } from "next/router";
 
 import {  toast } from 'react-toastify';
 import styles from "../../styles/styles.module.scss";
 
 const Dishes = (props) => {
+  const router = useRouter();
   const { dishes, setOrderList, orderList, enabled, owner, idR } = props;
   const [isDisabled, setIsDisabled] = useState(true);
   const [editedDishes, setEditedDishes] = useState(dishes ? dishes : []);
+  const [openModal, setOpenModal] = useState(false);
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      transform: 'translate(-50%, -50%)',
+      padding:"50px",
+      width:"20%",
+    },
+  };
 
   const sendDish = (index) => {
     if (dishes[index]) {
@@ -33,6 +47,20 @@ const Dishes = (props) => {
       }
     } catch (error) {
       toast.error('Ocurrió un error al intentar actualizar los datos del plato');
+    }
+  };
+
+  const removeDish = async (index) => {
+    if(idR){
+      try {
+        const { data } = await deleteDish(localStorage.getItem('token'), idR);
+        if (data) {
+          toast.success('Plato eliminado');
+          router.push("/list-restaurants");
+        }
+      } catch (error) {
+        toast.error('Ocurrió un error al intentar eliminar el plato');
+      }
     }
   };
 
@@ -76,7 +104,7 @@ const Dishes = (props) => {
                   Esta acción es irreversible
                 </div>
                 <div className={styles.profile__box__modal__button}>
-                  <button onClick={deleteRest}>Eliminar restaurante</button>
+                  <button onClick={() => {}}>Eliminar Plato</button>
                 </div>
               </div>
               </Modal>

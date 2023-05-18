@@ -149,7 +149,7 @@ export const registerUser = async (token, values) => {
     if (data.error) {
       console.log(data.error);
       return {
-        error: data.error,
+        error: data,
         data: null,
       };
     } else {
