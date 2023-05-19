@@ -12,8 +12,6 @@ const Orders = () => {
     const getOrdersList = async () => {
       try {
         const { data } = await getOrders(token);
-        console.log("-------------->");
-        console.log(data);
         setOrders(data);
       } catch (error) {
         toast.error('Ocurrió un error al intentar obtener los pedidos');
@@ -40,7 +38,6 @@ const Orders = () => {
           <>
             {row.original.key.id}
           </>
-
       },
       
       {
@@ -78,20 +75,20 @@ const Orders = () => {
   
     ];
 
-const optionsTable = {
-  globalFilter: false,
-  columnFilters: true,
-  sortable: true,
-  childrenUrl: false,
-  csvDownload:false,
-};
+  const optionsTable = {
+    globalFilter: false,
+    columnFilters: true,
+    sortable: true,
+    childrenUrl: false,
+    csvDownload:false,
+  };
 
 
 
   return (
-    <div>
-      <h1>Título de la tabla</h1>
-      <h2>Subtítulo de la tabla</h2>
+    <div className={styles.reactTable}>
+      <h1>Tus pedidos</h1>
+      <h2>Aquí podrás consultar tus pedidos</h2>
       <ReactTable data={orders} columns={columns} rowUrl="" options={optionsTable}/>
     </div>
   );
