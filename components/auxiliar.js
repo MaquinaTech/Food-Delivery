@@ -881,6 +881,44 @@ export const sendOrder = async (token, values) => {
  * @param {string} token auth
  * @returns {object} Object with error or data properties
  */
+export const getOrders = async (token) => {
+  const url ="http://127.0.0.1:8080/FoodDelivery/rest/orders/getAll";
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + token,
+      },
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.log(data.error);
+      return {
+        error: data.error,
+        data: null,
+      };
+    } else {
+      return {
+        error: null,
+        data: data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      data: null,
+    };
+  }
+}
+
+
+/**
+ * Get reviews
+ * @param {string} token auth
+ * @returns {object} Object with error or data properties
+ */
 export const getReviews = async (token,idR) => {
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/reviews";
   const formData = new URLSearchParams();
