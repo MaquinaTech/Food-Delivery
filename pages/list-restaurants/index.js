@@ -8,7 +8,7 @@ import { getRestaurants } from '../../components/auxiliar';
 
 function ListRestaurants() {
   const [restaurants, setRestaurants] = useState([]);
-  const [filters, setFilters] = useState({ name: ' ', address: ' ', bikeFriendly: false, available: 'all' });
+  const [filters, setFilters] = useState({ name: ' ', address: ' ', bikeFriendly: false, available: 'all',gradesAverage:""});
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
@@ -17,17 +17,19 @@ function ListRestaurants() {
         const token = localStorage.getItem('token');
         const restaurantList = await getRestaurants(token);
         setRestaurants(restaurantList.data);
+        console.log("Restaurants: ", restaurantList.data);
       } catch (error) {
         console.error('Error al obtener la lista de restaurantes:', error);
       }
     };
+    
 
     searchRestaurants();
   }, []);
 
   useEffect(() => {
     const filteredRestaurants = _.filter(restaurants, (restaurant) => {
-      const { name, address, bikeFriendly, available } = filters;
+      const { name, address, bikeFriendly, available, gradesAverage } = filters;
       return (
         (name === ' ' || restaurant.name.includes(name)) &&
         (address === ' ' || restaurant.address.includes(address)) &&
@@ -35,7 +37,13 @@ function ListRestaurants() {
         (available === 'all' || restaurant.available === available)
       );
     });
-    setFilteredData(filteredRestaurants);
+    if(filters.gradesAverage != ""){
+      const sortedRestaurants = _.orderBy(filteredRestaurants, ['gradesAverage'], [filters.gradesAverage == "1" ? 'desc' : 'asc']);
+      setFilteredData(sortedRestaurants);
+    }
+    else{
+      setFilteredData(filteredRestaurants);
+    }
   }, [filters, restaurants]);
   
     return (

@@ -7,13 +7,14 @@ const SearchFilter = (props) => {
 
   const handleFilter = (event) => {
     console.log("event", event);
-    const { name, address, bikeFriendly, available } = event;
+    const { name, address, bikeFriendly, available, gradesAverage } = event;
     setFilters((filters) => ({
       ...filters,
       name: name ? name : "",
       address: address ? address : "",
       bikeFriendly: bikeFriendly ? bikeFriendly : "",
       available: available ? (available !== "all" ? 1 : "all") : 0,
+      gradesAverage: gradesAverage ? gradesAverage : "",
     }));
   };
 
@@ -55,39 +56,69 @@ const SearchFilter = (props) => {
                 type="text"
                 />
             </div>
-            <div className={styles.flex}>
+            <div className={styles.searchFilter__content__list__item}>
+              <label htmlFor="available">Disponibilidad</label>
+                <div>
+                  <label>
+                    <Field
+                        name="available"
+                        id="all"
+                        type="radio"
+                        value="all"
+                    />
+                    Todos
+                  </label>
+                </div>
+                
+                <div>
+                  <label>
+                    <Field
+                        name="available"
+                        id="yesAvailable"
+                        type="radio"
+                        value="1"
+                    />
+                    Disponibles
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    <Field
+                        name="available"
+                        id="noAvailable"
+                        type="radio"
+                        value="0"
+                    />
+                    No disponibles
+                  </label>
+                </div>
+              
+            </div>
+
+            <div className={styles.searchFilter__content__list__item}>
+            <label htmlFor="gradesAverage">Ordenar por Valoración</label>
               <div>
                 <label>
                   <Field
-                      name="available"
-                      id="all"
+                      name="gradesAverage"
+                      id="asc"
                       type="radio"
-                      value="all"
+                      value="0"
                   />
-                  Todos
+                  Menos valorados
                 </label>
               </div>
               
               <div>
                 <label>
                   <Field
-                      name="available"
-                      id="yesAvailable"
+                      name="gradesAverage"
+                      id="desc"
                       type="radio"
                       value="1"
                   />
-                  Disponibles
-                </label>
-              </div>
-              <div>
-                <label>
-                  <Field
-                      name="available"
-                      id="noAvailable"
-                      type="radio"
-                      value="0"
-                  />
-                  No disponibles
+                  Más valorados
                 </label>
               </div>
             </div>
