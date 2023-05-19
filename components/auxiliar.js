@@ -504,7 +504,6 @@ export const addRestaurants = async (token, values) => {
  */
 export const addDish = async (token, values, idR) => {
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/dish/add";
-  console.log("Valores: ",values);
   try {
     const formData = new URLSearchParams();
     if(values.name){
@@ -603,7 +602,6 @@ export const deleteDish = async (token, id) => {
  */
 export const updateDish = async (token, values) => {
   const url ="http://127.0.0.1:8080/FoodDelivery/rest/restaurants/dish/update";
-  console.log("hollllaa");
   try {
     const formData = new URLSearchParams();
     formData.append("id", values.id);

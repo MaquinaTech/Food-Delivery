@@ -3,6 +3,7 @@ import { Button } from "reactstrap";
 import { updateDish, addDish, deleteDish } from '../auxiliar';
 import { Formik, Form, Field } from 'formik';
 import Modal from 'react-modal';
+import DishForm from './DishForm';
 import { useRouter } from "next/router";
 
 import {  toast } from 'react-toastify';
@@ -33,22 +34,30 @@ const Dishes = (props) => {
   };
 
   const editDish = async (values) => {
-    console.log(values);
-    try {
-      const { data } = await updateDish(localStorage.getItem('token'), values);
-      if (data) {
-        toast.success('Datos del plato actualizados correctamente');
-        setOpenModalDelete(false);
+    if(values){
+      try {
+        const { data, error } = await updateDish(localStorage.getItem('token'), values);
+        if (data) {
+          toast.success('Datos del plato actualizados correctamente');
+          setOpenModalDelete(false);
+        }
+      } catch (error) {
+        toast.error('Ocurrió un error al intentar actualizar los datos del plato');
       }
-    } catch (error) {
-      toast.error('Ocurrió un error al intentar actualizar los datos del plato');
+    }
+    else{
+      console.log("no hay values");
     }
   };
 
-  const removeDish = async (id) => {
-    if(idR && id){
+  const removeDish = async (index) => {
+    if(idR){
+      //Find dish id
+      console.log("index",index);
+      const id = dishes[index].id;
+      console.log("id",id);
       try {
-        const { data, error } = await deleteDish(localStorage.getItem('token'), id);
+        const { data } = await deleteDish(localStorage.getItem('token'), id);
         console.log(data);
         if (data) {
           toast.success('Plato eliminado');
@@ -73,14 +82,17 @@ const Dishes = (props) => {
         return;
       }
       try {
-        const { data } = await addDish(localStorage.getItem('token'), values,idR);
-        if (data) {
+        const data = await addDish(localStorage.getItem('token'), values,idR);
+        if (data.data) {
           toast.success('Plato añadido correctamente');
           setOpenModalNew(false);
-          setDishes([...dishes, data]);
+          console.log(data.data);
+          values = {...values,id: data.data};
+          console.log(values);
+          setDishes([...dishes, values]);
         }
         else{
-          toast.success('LOL');
+          toast.success('Error al crear plato');
         }
       } catch (error) {
         toast.error('Ocurrió un error al intentar añadir el plato');
@@ -110,39 +122,7 @@ const Dishes = (props) => {
                     Complete todos los campos, porfavor
                   </div>
                   <div className={styles.profile__box__modal__form}>
-                  <Formik
-                    initialValues={{
-                      "name": "",
-                      "description": "",
-                      "price": 0,
-                    }}
-                    onSubmit={(values) => {
-                      newDish(values)
-                    }}
-                  >
-                    {() => (
-                      <Form>
-                        <div className={styles.profile__box__modal__form__item}>
-                          <span>Nombre</span>
-                          <Field type="text" name="name" id="name" />
-                        </div>
-
-                        <div className={styles.profile__box__modal__form__item}>
-                          <span>Descripción</span>
-                          <Field as="textarea" name="description" id="description" />
-                        </div>
-
-                        <div className={styles.profile__box__modal__form__item}>
-                          <span>Precio €</span>
-                          <Field type="number" name="price" id="price" />
-                        </div>
-                          
-                        <div className={styles.profile__box__modal__button}>
-                          <button type="submit">Crear Plato</button>
-                        </div>
-                      </Form>
-                    )}
-                  </Formik>
+                    <DishForm onSubmit={newDish}/>
                   </div>
                   
                 </div>
@@ -190,7 +170,7 @@ const Dishes = (props) => {
               </Modal>
               {!isDisabled && (
               <div className={styles.EditRestaurants__box__dishes__dish__buttons}>
-                <Button color="danger" size="md" disabled={enabled} onClick={() => removeDish(dish.id)}>
+                <Button color="danger" size="md" disabled={enabled} onClick={() => removeDish(index)}>
                   Eliminar
                 </Button>
               </div>
@@ -209,10 +189,9 @@ const Dishes = (props) => {
             </div>
             <div className={styles.EditRestaurants__box__dishes__dish__info}>
               <Formik
+              enableReinitialize={true}
                 initialValues={{
-                  "name": dish.name ? dish.name : "",
-                  "description": dish.description ? dish.description : "",
-                  "price": dish.price ? dish.price : 0,
+                  ...(dish ? { ...dish } : {}),
                 }}
                 onSubmit={(values) => {
                   editDish(values)
