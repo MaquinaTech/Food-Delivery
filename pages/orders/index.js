@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { getOrders } from '../../components/auxiliar';
 import  ReactTable from '../../components/ReactTable';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import styles from '../../styles/ReactTable.module.scss';
 
 const Orders = () => {
@@ -20,14 +23,6 @@ const Orders = () => {
     getOrdersList();
   }, []);
 
-  function customFilter(filter, row) {
-    const rowValue = row.original.value[filter.id];
-    if (Array.isArray(rowValue) && rowValue.includes(filter.value)) {
-      return true;
-    }
-    return rowValue === filter.value;
-  }
-
 
   const columns = 
     [
@@ -43,8 +38,6 @@ const Orders = () => {
       {
         Header: 'Platos',
         accessor: 'description',
-        filter: 'equals',
-        filterFunction: customFilter, 
         Cell: ({ row }) => 
 
         <React.Fragment>
@@ -65,7 +58,7 @@ const Orders = () => {
           const items = row.original.value;
           if (items) {
             const totalPrice = items.reduce((total, item) => total + item.price, 0);
-            return <p>{totalPrice}</p>;
+            return <p>{totalPrice + " €"}</p>;
           } else {
             return "-";
           }
@@ -77,7 +70,7 @@ const Orders = () => {
 
   const optionsTable = {
     globalFilter: false,
-    columnFilters: true,
+    columnFilters: false,
     sortable: true,
     childrenUrl: false,
     csvDownload:false,
@@ -87,6 +80,11 @@ const Orders = () => {
 
   return (
     <div className={styles.reactTable}>
+      <div className={styles.reactTable__back}>
+        <Link href="/list-restaurants">
+          <img src="/back.svg" alt="back"/>  Ir a búsqueda
+        </Link>
+      </div>
       <h1>Tus pedidos</h1>
       <h2>Aquí podrás consultar tus pedidos</h2>
       <ReactTable data={orders} columns={columns} rowUrl="" options={optionsTable}/>

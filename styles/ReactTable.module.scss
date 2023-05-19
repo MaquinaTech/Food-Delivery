@@ -1,10 +1,22 @@
 .reactTable {
     width:100%;
-    padding-right: 25px;
+    padding-right: 50px;
     padding-left: 25px;
     border-spacing: 0;
     border: 1px; 
     border-color:#efefef; 
+
+    &__back {
+        margin-top:10px;
+        a{
+          font-size: x-large;
+          text-decoration: none;
+          color: black;
+        }
+        img {
+          width:30px;
+        }
+      }
 
     &__csv {
         margin-bottom: 28px;
@@ -43,6 +55,9 @@
         height:630px;
         min-height:630px;
         max-height:630px;
+        border-radius: 40px 70px 70px 40px;
+        background: content-box;
+        background-color: #e6e4e4 !important;
     }
 
     thead{
@@ -88,7 +103,7 @@
             outline: none;
             justify-content: left;
             display:flex;
-            background-color: lightgrey;
+            background-color:#74747467;
         }
         select {
             width:75% !important;
