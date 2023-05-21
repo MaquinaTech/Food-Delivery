@@ -59,7 +59,7 @@ const SearchFilter = (props) => {
             <div className={styles.searchFilter__content__list__item}>
               <label htmlFor="available">Disponibilidad</label>
                 <div>
-                  <label>
+                  <label style={{fontWeight:"300"}}>
                     <Field
                         name="available"
                         id="all"
@@ -71,7 +71,7 @@ const SearchFilter = (props) => {
                 </div>
                 
                 <div>
-                  <label>
+                  <label style={{fontWeight:"300"}}>
                     <Field
                         name="available"
                         id="yesAvailable"
@@ -83,7 +83,7 @@ const SearchFilter = (props) => {
                 </div>
 
                 <div>
-                  <label>
+                  <label style={{fontWeight:"300"}}>
                     <Field
                         name="available"
                         id="noAvailable"
@@ -99,7 +99,7 @@ const SearchFilter = (props) => {
             <div className={styles.searchFilter__content__list__item}>
             <label htmlFor="gradesAverage">Ordenar por Valoración</label>
               <div>
-                <label>
+                <label style={{fontWeight:"300"}}>
                   <Field
                       name="gradesAverage"
                       id="asc"
@@ -111,7 +111,7 @@ const SearchFilter = (props) => {
               </div>
               
               <div>
-                <label>
+                <label style={{fontWeight:"300"}}>
                   <Field
                       name="gradesAverage"
                       id="desc"
