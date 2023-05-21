@@ -27,7 +27,7 @@ const Orders = () => {
   const columns = 
     [
       {
-        Header: 'Id',
+        Header: 'Número de pedido',
         accessor: 'id',
         Cell: ({ row }) => 
           <>
@@ -43,10 +43,12 @@ const Orders = () => {
         <React.Fragment>
           {row.original.value ? row.original.value.map((item, index) => {
             return (
-              <div key={index}>
+              <span key={index}>
                 <b>{item.name}</b>
-                <p>{item.description}</p>
-              </div>
+                <br/>
+                <span style={{fontWeight:"300"}}>{item.description}</span>
+                <br/>
+              </span>
             )
           }) : "-"}
         </React.Fragment>
@@ -58,7 +60,7 @@ const Orders = () => {
           const items = row.original.value;
           if (items) {
             const totalPrice = items.reduce((total, item) => total + item.price, 0);
-            return <p>{totalPrice + " €"}</p>;
+            return <span>{totalPrice + " €"}</span>;
           } else {
             return "-";
           }
@@ -72,8 +74,10 @@ const Orders = () => {
     globalFilter: false,
     columnFilters: false,
     sortable: true,
+    paginate:false,
     childrenUrl: false,
     csvDownload:false,
+    
   };
 
 

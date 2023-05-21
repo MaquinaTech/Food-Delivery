@@ -270,6 +270,7 @@ function Table({ columns, data, rowUrl, options }) {
             <code>{JSON.stringify(state.filters, null, 2)}</code>
           </pre>
         </div>*/}
+        {options.paginate &&
         <div>
           <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
             {canPreviousPage &&
@@ -311,7 +312,7 @@ function Table({ columns, data, rowUrl, options }) {
           </select>
           
           
-        </div>
+        </div>}
       </div>
     </>
   )
