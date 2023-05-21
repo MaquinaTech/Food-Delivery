@@ -13,7 +13,7 @@ const SearchFilter = (props) => {
       name: name ? name : "",
       address: address ? address : "",
       bikeFriendly: bikeFriendly ? bikeFriendly : "",
-      available: available ? (available !== "all" ? 1 : "all") : 0,
+      available: available ? (available == "all" ? "all" : (available == "1" ? 1 : 0) ) : "all",
       gradesAverage: gradesAverage ? gradesAverage : "",
     }));
   };
@@ -59,36 +59,39 @@ const SearchFilter = (props) => {
             <div className={styles.searchFilter__content__list__item}>
               <label htmlFor="available">Disponibilidad</label>
                 <div>
-                  <label style={{fontWeight:"300"}}>
+                  <label style={{fontWeight:"300",cursor:"pointer"}}>
                     <Field
                         name="available"
                         id="all"
                         type="radio"
                         value="all"
+                        style={{cursor:"pointer"}}
                     />
                     Todos
                   </label>
                 </div>
                 
                 <div>
-                  <label style={{fontWeight:"300"}}>
+                  <label style={{fontWeight:"300",cursor:"pointer"}}>
                     <Field
                         name="available"
                         id="yesAvailable"
                         type="radio"
                         value="1"
+                        style={{cursor:"pointer"}}
                     />
                     Disponibles
                   </label>
                 </div>
 
                 <div>
-                  <label style={{fontWeight:"300"}}>
+                  <label style={{fontWeight:"300",cursor:"pointer"}}>
                     <Field
                         name="available"
                         id="noAvailable"
                         type="radio"
                         value="0"
+                        style={{cursor:"pointer"}}
                     />
                     No disponibles
                   </label>
@@ -99,24 +102,26 @@ const SearchFilter = (props) => {
             <div className={styles.searchFilter__content__list__item}>
             <label htmlFor="gradesAverage">Ordenar por Valoración</label>
               <div>
-                <label style={{fontWeight:"300"}}>
+                <label style={{fontWeight:"300",cursor:"pointer"}}>
                   <Field
                       name="gradesAverage"
                       id="asc"
                       type="radio"
                       value="0"
+                      style={{cursor:"pointer"}}
                   />
                   Menos valorados
                 </label>
               </div>
               
               <div>
-                <label style={{fontWeight:"300"}}>
+                <label style={{fontWeight:"300",cursor:"pointer"}}>
                   <Field
                       name="gradesAverage"
                       id="desc"
                       type="radio"
                       value="1"
+                      style={{cursor:"pointer"}}
                   />
                   Más valorados
                 </label>
@@ -129,15 +134,17 @@ const SearchFilter = (props) => {
                 id="bikeFriendly"
                 name="bikeFriendly"
                 type="checkbox"
+                style={{cursor:"pointer"}}
                 />
                 <label htmlFor="bikeFriendly">
                 ¿Bike Friendly?
                 </label>
             </div>
-
-            <button type="submit" className="btn btn-warning">
-                Filtrar
-            </button>
+            <div className={styles.searchFilter__content__button}>
+              <button type="submit" className="btn btn-warning">
+                  Filtrar
+              </button>
+            </div>
             </Form>
         )}
         </Formik>

@@ -29,7 +29,8 @@ function ListRestaurants() {
 
   useEffect(() => {
     const filteredRestaurants = _.filter(restaurants, (restaurant) => {
-      const { name, address, bikeFriendly, available, gradesAverage } = filters;
+      const { name, address, bikeFriendly, available } = filters;
+      console.log("Filtros: ",available);
       return (
         (name === ' ' || restaurant.name.includes(name)) &&
         (address === ' ' || restaurant.address.includes(address)) &&
