@@ -35,6 +35,8 @@ function AddRestaurants() {
             toast.success('Datos actualizados correctamente');
             router.push('/list-restaurants');
           }
+            toast.success('Datos actualizados correctamente');
+            router.push('/list-restaurants');
         } catch (error) {
           toast.error('Ocurrió un error al intentar actualizar los datos');
         }

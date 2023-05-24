@@ -178,13 +178,13 @@ const Dishes = (props) => {
               <Button color="success" size="md" disabled={enabled} onClick={() => sendDish(index)}>
                 Pedir
               </Button>
-              {!isDisabled && (
+              {/*!isDisabled && (
                 <div className={styles.EditRestaurants__box__dishes__dish__buttons}>
                   <Button color="warning" size="md" disabled={enabled} onClick={() => editDish(index)}>
                     Editar
                   </Button>
                 </div>
-              )}
+              )*/}
 
             </div>
             <div className={styles.EditRestaurants__box__dishes__dish__info}>
@@ -215,8 +215,15 @@ const Dishes = (props) => {
                       <label>
                         Descripción
                       </label>
-                      <Field as="textarea" name="description" id="description" />
+                      <Field as="textarea" name="description" id="description" disabled={isDisabled}/>
                     </div>
+                    {!isDisabled && (
+                    <div className={styles.EditRestaurants__box__dishes__dish__buttons}>
+                      <Button color="warning" size="md" disabled={enabled} type="submit">
+                        Editar
+                      </Button>
+                    </div>
+                  )}
                   </Form>
                 )}
               </Formik>
